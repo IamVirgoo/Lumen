@@ -5,6 +5,7 @@ import './global.sass'
 import './styles/index.sass'
 import './styles/header.sass'
 import './styles/card.sass'
+import './styles/authentication.sass'
 
 import { RouterProvider } from "react-router-dom";
 import { Router } from "./router";

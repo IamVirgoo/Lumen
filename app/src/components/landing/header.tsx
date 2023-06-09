@@ -5,7 +5,7 @@ export default function Header() {
         <div className={"header--container"}>
             <div className={"header--container--content"}>
                 <h2 className={"header--container--content--title"}>Lumen</h2>
-                <Link className={"header--container--content--button"} to={"/singIn"}>
+                <Link className={"header--container--content--button"} to={"/sign-in"}>
                     Войти
                 </Link>
             </div>
