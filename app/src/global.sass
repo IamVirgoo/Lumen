@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap')
+
+$primary_green_color: #407468
+$primary_white_color: #FFFFFF
+$secondary_white_color: #D9D9D9
+$secondary_black_color: #414141
+
+@mixin line
+  height: 1px
+  width: 100%
+  background-color: $primary_white_color
+
+@mixin container
+  margin: 0 auto
+  max-width: 1240px
+
+body
+  margin: 0
+  padding: 0
+  font-family: 'Jost', sans-serif
+  background-color: $primary_green_color
+
+h1, h2, h3, h4, h5, h6, p, a
+  margin-block: 0
+  padding-block: 0
+  text-decoration: none

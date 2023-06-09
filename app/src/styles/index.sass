@@ -1,0 +1,35 @@
+@import "../global"
+
+.hero
+  padding-top: 100px
+  &--container
+    @include container
+    &--title
+      width: 70%
+      font-size: 48px
+      letter-spacing: .4em
+      font-family: 'Jost', sans-serif
+      font-weight: 400
+      color: $primary_white_color
+    &--line
+      margin: 100px 0 50px 0
+      @include line
+.services,
+.personal
+  &--container
+    @include container
+    &--title
+      font-size: 48px
+      letter-spacing: .4em
+      font-family: 'Jost', sans-serif
+      font-weight: 400
+      color: $primary_white_color
+    &--content
+      padding-top: 50px
+      display: flex
+      justify-content: space-between
+      align-items: center
+      gap: 60px
+    &--line
+      margin: 50px 0
+      @include line
