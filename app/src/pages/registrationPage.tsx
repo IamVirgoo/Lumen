@@ -20,10 +20,6 @@ export default function RegistrationPage() {
                 password : password as string
             })
             if (isSuccess) navigator('/app')
-            /*useSignInQuery({
-                username: username as string,
-                password: password as string
-            })*/
         } catch (error) {
             console.log(error)
         }

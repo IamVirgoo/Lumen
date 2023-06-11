@@ -1,11 +1,17 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSignInMutation } from "../services/authService";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { logIn } from "../store/reducers/UserPatientSlice";
+import {RootState} from "../store/store";
 
 export default function LoginPage() {
+    const dispatch = useAppDispatch()
+    const USER = useAppSelector((state : RootState) => state.userPatient)
+
     const navigator = useNavigate()
 
-    const [username, setUsername] = useState<string | null>(null)
+    const [username, setUsername] = useState<string | null>()
     const [password, setPassword] = useState<string | null>(null)
 
     const [LoginUser, {isLoading, isError, error, isSuccess}] = useSignInMutation()
@@ -16,7 +22,15 @@ export default function LoginPage() {
                 username : username as string,
                 password : password as string
             })
-            if (isSuccess) navigator('/app')
+            console.log(USER)
+            if (isSuccess) {
+                // navigator('/app')
+                dispatch(logIn({
+                    username : username as string,
+                    authenticate : true,
+                    access_token : ""
+                }))
+            }
         } catch (error) {
             console.log(error)
         }

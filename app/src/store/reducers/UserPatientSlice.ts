@@ -11,7 +11,7 @@ export const IUserPatientSlice = createSlice({
     name : "patient",
     initialState,
     reducers: {
-        login : (state, action : PayloadAction<IUserPatient>) => {
+        logIn : (state, action : PayloadAction<IUserPatient>) => {
             state.username = action.payload.username;
             state.authenticate = action.payload.authenticate;
             state.access_token = action.payload.access_token
@@ -23,5 +23,10 @@ export const IUserPatientSlice = createSlice({
         }
     }
 })
+
+export const {
+    logIn,
+    logOut
+} = IUserPatientSlice.actions
 
 export default IUserPatientSlice.reducer
