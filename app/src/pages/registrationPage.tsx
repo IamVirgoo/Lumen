@@ -5,7 +5,9 @@ import { useSignUpMutation } from "../services/authService";
 export default function RegistrationPage() {
     const navigator = useNavigate()
 
-    const [username, setUsername] = useState<string | null>(null)
+    const [name, setName] = useState<string | null>(null)
+    const [surname, setSurname] = useState<string | null>(null)
+    const [patronymic, setPatronymic] = useState<string | null>(null)
     const [telephoneNumber, setTelephoneNumber] = useState<string | null>(null)
     const [password, setPassword] = useState<string | null>(null)
     const [confirmPassword, setConfirmPassword] = useState<string | null>(null)
@@ -15,7 +17,9 @@ export default function RegistrationPage() {
     const handleSubmit = async () => {
         try {
             RegistrationUser({
-                username : username as string,
+                name : name as string,
+                surname : surname as string,
+                patronymic : patronymic as string,
                 telephoneNumber : telephoneNumber as string,
                 password : password as string
             })
@@ -34,8 +38,18 @@ export default function RegistrationPage() {
                 <form className={"sign-up--container--form"}>
                     <input className={"sign-up--container--form--input"}
                            type="text"
-                           placeholder={"Логин"}
-                           onChange={(e) => setUsername(e.target.value)}
+                           placeholder={"Имя"}
+                           onChange={(e) => setName(e.target.value)}
+                    />
+                    <input className={"sign-up--container--form--input"}
+                           type="text"
+                           placeholder={"Фамилия"}
+                           onChange={(e) => setSurname(e.target.value)}
+                    />
+                    <input className={"sign-up--container--form--input"}
+                           type="text"
+                           placeholder={"Отчество"}
+                           onChange={(e) => setPatronymic(e.target.value)}
                     />
                     <input className={"sign-up--container--form--input"}
                            type="tel"

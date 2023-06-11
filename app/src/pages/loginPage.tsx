@@ -11,7 +11,7 @@ export default function LoginPage() {
 
     const navigator = useNavigate()
 
-    const [username, setUsername] = useState<string | null>()
+    const [telephoneNumber, setTelephoneNumber] = useState<string | null>()
     const [password, setPassword] = useState<string | null>(null)
 
     const [LoginUser, {isLoading, isError, error, isSuccess}] = useSignInMutation()
@@ -19,17 +19,15 @@ export default function LoginPage() {
     const handleSubmit = async () => {
         try {
             LoginUser({
-                username : username as string,
+                telephoneNumber : telephoneNumber as string,
                 password : password as string
             })
             console.log(USER)
             if (isSuccess) {
                 // navigator('/app')
-                dispatch(logIn({
-                    username : username as string,
-                    authenticate : true,
-                    access_token : ""
-                }))
+                /*dispatch(logIn({
+                    /!*...*!/
+                }))*/
             }
         } catch (error) {
             console.log(error)
@@ -45,8 +43,8 @@ export default function LoginPage() {
                 <form className={"sign-in--container--form"}>
                     <input className={"sign-in--container--form--input"}
                            type="text"
-                           placeholder={"Логин"}
-                           onChange={(e) => setUsername(e.target.value)}
+                           placeholder={"Номер телефона"}
+                           onChange={(e) => setTelephoneNumber(e.target.value)}
                     />
                     <input className={"sign-in--container--form--input"}
                            type="password"

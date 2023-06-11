@@ -1,16 +1,20 @@
 export interface IUserPatient {
-    username : string;
+    name : string;
+    surname : string;
+    patronymic : string;
     authenticate : boolean;
     access_token : string
 }
 
 export interface IUserPatientLoginRequest {
-    username : string;
+    telephoneNumber : string;
     password : string
 }
 
 export interface IUserPatientRegistrationRequest {
-    username : string;
+    name : string;
+    surname : string;
+    patronymic : string;
     telephoneNumber : string;
     password : string
 }
