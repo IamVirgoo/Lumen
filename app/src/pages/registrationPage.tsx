@@ -23,6 +23,7 @@ export default function RegistrationPage() {
                 telephoneNumber : telephoneNumber as string,
                 password : password as string
             })
+            navigator("/confirmation")
             if (isSuccess) navigator('/app')
         } catch (error) {
             console.log(error)

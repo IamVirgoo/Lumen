@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSignInMutation } from "../services/authService";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { logIn } from "../store/reducers/UserPatientSlice";
-import {RootState} from "../store/store";
+import { RootState } from "../store/store";
 
 export default function LoginPage() {
     const dispatch = useAppDispatch()

@@ -4,6 +4,7 @@ import IndexPage from "./pages/indexPage";
 import AppOutlet from "./layout/AppOutlet";
 import LoginPage from "./pages/loginPage";
 import RegistrationPage from "./pages/registrationPage";
+import ConfirmationPage from "./pages/confirmationPage";
 
 export const Router = createBrowserRouter([
     {
@@ -18,5 +19,9 @@ export const Router = createBrowserRouter([
     {
         path : '/sign-up',
         element : <RegistrationPage/>
+    },
+    {
+        path : "/confirmation",
+        element : <ConfirmationPage/>
     }
 ])
