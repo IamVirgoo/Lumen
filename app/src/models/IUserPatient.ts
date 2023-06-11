@@ -11,6 +11,6 @@ export interface IUserPatientLoginRequest {
 
 export interface IUserPatientRegistrationRequest {
     username : string;
-    email : string;
+    telephoneNumber : string;
     password : string
 }

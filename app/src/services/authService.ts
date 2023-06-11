@@ -1,14 +1,13 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query";
-import {IUserPatient, IUserPatientLoginRequest, IUserPatientRegistrationRequest} from "../models/IUserPatient";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
+import { IUserPatient, IUserPatientLoginRequest, IUserPatientRegistrationRequest } from "../models/IUserPatient";
 
-export const AuthMiddleware = createApi({
-    reducerPath : "auth-middleware",
+export const AuthService = createApi({
+    reducerPath : "auth-service",
     baseQuery : fetchBaseQuery({
-        baseUrl: ""
+        baseUrl: "http://localhost:8080"
     }),
-    tagTypes : ['Auth'],
     endpoints: (build) => ({
-        login : build.mutation<IUserPatient, Partial<IUserPatientLoginRequest>>({
+        signIn : build.mutation<IUserPatient, IUserPatientLoginRequest>({
             query : ( ...auth ) => ({
                 url : "/authenticate",
                 headers : {
@@ -17,9 +16,9 @@ export const AuthMiddleware = createApi({
                 method: "POST",
                 redirect: "follow",
                 body: JSON.stringify(auth)
-            })
+            }),
         }),
-        registration : build.mutation<IUserPatient, Partial<IUserPatientRegistrationRequest>>({
+        signUp : build.mutation<IUserPatient, Partial<IUserPatientRegistrationRequest>>({
             query : ( ...auth ) => ({
                 url : "/registration",
                 headers : {
@@ -32,3 +31,8 @@ export const AuthMiddleware = createApi({
         })
     })
 })
+
+export const {
+    useSignInMutation,
+    useSignUpMutation
+} = AuthService

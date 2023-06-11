@@ -23,3 +23,5 @@ export const IUserPatientSlice = createSlice({
         }
     }
 })
+
+export default IUserPatientSlice.reducer
