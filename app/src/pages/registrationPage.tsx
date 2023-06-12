@@ -5,26 +5,28 @@ import { useSignUpMutation } from "../services/authService";
 export default function RegistrationPage() {
     const navigator = useNavigate()
 
-    const [name, setName] = useState<string | null>(null)
-    const [surname, setSurname] = useState<string | null>(null)
-    const [patronymic, setPatronymic] = useState<string | null>(null)
-    const [telephoneNumber, setTelephoneNumber] = useState<string | null>(null)
-    const [password, setPassword] = useState<string | null>(null)
-    const [confirmPassword, setConfirmPassword] = useState<string | null>(null)
+    const [name, setName] = useState<string>("")
+    const [surname, setSurname] = useState<string>("")
+    const [patronymic, setPatronymic] = useState<string>("")
+    const [telephoneNumber, setTelephoneNumber] = useState<string>("")
+    const [password, setPassword] = useState<string>("")
+    const [confirmPassword, setConfirmPassword] = useState<string>("")
 
-    const [RegistrationUser, {isLoading, isError, isSuccess}] = useSignUpMutation()
+    const [registrationUser, {isLoading, isError, isSuccess}] = useSignUpMutation()
 
     const handleSubmit = async () => {
         try {
-            RegistrationUser({
-                name : name as string,
-                surname : surname as string,
-                patronymic : patronymic as string,
-                telephoneNumber : telephoneNumber as string,
-                password : password as string
+            await registrationUser({
+                name : name,
+                surname : surname,
+                patronymic : patronymic,
+                phone_number : Number(telephoneNumber),
+                password : password
+            }).then((result) => {
+                console.log(result)
             })
-            navigator("/confirmation")
-            if (isSuccess) navigator('/app')
+            /*navigator("/confirmation")*/
+            /*if (isSuccess) navigator('/app')*/
         } catch (error) {
             console.log(error)
         }

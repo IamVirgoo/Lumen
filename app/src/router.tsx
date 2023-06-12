@@ -5,6 +5,7 @@ import AppOutlet from "./layout/AppOutlet";
 import LoginPage from "./pages/loginPage";
 import RegistrationPage from "./pages/registrationPage";
 import ConfirmationPage from "./pages/confirmationPage";
+import ApplicationIndexPage from "./pages/application/applicationIndexPage";
 
 export const Router = createBrowserRouter([
     {
@@ -23,5 +24,15 @@ export const Router = createBrowserRouter([
     {
         path : "/confirmation",
         element : <ConfirmationPage/>
+    },
+    {
+        path : "/application",
+        element : <AppOutlet/>,
+        children : [
+            {
+                index : true,
+                element : <ApplicationIndexPage/>
+            }
+        ]
     }
 ])

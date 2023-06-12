@@ -4,12 +4,12 @@ import { IUserPatient, IUserPatientLoginRequest, IUserPatientRegistrationRequest
 export const AuthService = createApi({
     reducerPath : "auth-service",
     baseQuery : fetchBaseQuery({
-        baseUrl: "http://localhost:8080"
+        baseUrl: "http://localhost:8888"
     }),
     endpoints: (build) => ({
-        signIn : build.mutation<IUserPatient, IUserPatientLoginRequest>({
-            query : ( ...auth ) => ({
-                url : "/authenticate",
+        signIn : build.mutation<IUserPatient, Partial<IUserPatientLoginRequest>>({
+            query : ( auth ) => ({
+                url : "/auth",
                 headers : {
                     "Content-Type": "application/json"
                 },
@@ -19,8 +19,8 @@ export const AuthService = createApi({
             }),
         }),
         signUp : build.mutation<IUserPatient, Partial<IUserPatientRegistrationRequest>>({
-            query : ( ...auth ) => ({
-                url : "/registration",
+            query : ( auth ) => ({
+                url : "/user",
                 headers : {
                     "Content-Type": "application/json"
                 },
