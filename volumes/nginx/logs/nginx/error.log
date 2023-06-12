@@ -194,3 +194,30 @@
 2023/06/11 23:40:49 [notice] 1#1: start worker process 23
 2023/06/11 23:40:49 [notice] 1#1: start worker process 24
 2023/06/11 23:40:49 [notice] 1#1: start worker process 25
+2023/06/12 07:04:35 [notice] 1#1: using the "epoll" event method
+2023/06/12 07:04:35 [notice] 1#1: nginx/1.25.0
+2023/06/12 07:04:35 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2023/06/12 07:04:35 [notice] 1#1: OS: Linux 5.15.0-1038-azure
+2023/06/12 07:04:35 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/06/12 07:04:35 [notice] 1#1: start worker processes
+2023/06/12 07:04:35 [notice] 1#1: start worker process 21
+2023/06/12 07:04:35 [notice] 1#1: start worker process 22
+2023/06/12 07:04:56 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2023/06/12 07:04:56 [notice] 21#21: gracefully shutting down
+2023/06/12 07:04:56 [notice] 21#21: exiting
+2023/06/12 07:04:56 [notice] 22#22: gracefully shutting down
+2023/06/12 07:04:56 [notice] 22#22: exiting
+2023/06/12 07:04:56 [notice] 22#22: exit
+2023/06/12 07:04:56 [notice] 21#21: exit
+2023/06/12 07:04:56 [notice] 1#1: signal 17 (SIGCHLD) received from 21
+2023/06/12 07:04:56 [notice] 1#1: worker process 21 exited with code 0
+2023/06/12 07:04:56 [notice] 1#1: worker process 22 exited with code 0
+2023/06/12 07:04:56 [notice] 1#1: exit
+2023/06/12 07:05:03 [notice] 1#1: using the "epoll" event method
+2023/06/12 07:05:03 [notice] 1#1: nginx/1.25.0
+2023/06/12 07:05:03 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2023/06/12 07:05:03 [notice] 1#1: OS: Linux 5.15.0-1038-azure
+2023/06/12 07:05:03 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/06/12 07:05:03 [notice] 1#1: start worker processes
+2023/06/12 07:05:03 [notice] 1#1: start worker process 20
+2023/06/12 07:05:03 [notice] 1#1: start worker process 21

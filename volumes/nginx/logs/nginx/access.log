@@ -8,3 +8,5 @@
 172.30.0.1 - - [11/Jun/2023:23:39:23 +0000] "POST /medsoft/user HTTP/1.1" 502 157 "-" "PostmanRuntime/7.32.2" "-"
 172.31.0.1 - - [11/Jun/2023:23:40:59 +0000] "GET /medsoft/ HTTP/1.1" 200 4 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36" "-"
 172.31.0.1 - - [11/Jun/2023:23:41:17 +0000] "POST /medsoft/user HTTP/1.1" 200 139 "-" "PostmanRuntime/7.32.2" "-"
+172.18.0.1 - - [12/Jun/2023:07:05:56 +0000] "GET /medsoft/ HTTP/1.1" 200 4 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36" "176.212.147.160"
+172.18.0.1 - - [12/Jun/2023:07:05:56 +0000] "GET /favicon.ico HTTP/1.1" 404 555 "https://vadim2422-orange-fortnight-jv579rqpv6jcp6wj-80.preview.app.github.dev/medsoft/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36" "176.212.147.160"
