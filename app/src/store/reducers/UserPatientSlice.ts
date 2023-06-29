@@ -6,7 +6,7 @@ const initialState: IUserPatient = {
     surname : "surname",
     patronymic : "patronymic",
     phone_number : "0-000-000-0000",
-    authenticate : false,
+    authenticate : true,
     access_token : ""
 }
 

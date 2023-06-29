@@ -28,11 +28,22 @@ export const AuthService = createApi({
                 redirect: "follow",
                 body: JSON.stringify(auth)
             })
+        }),
+        getUser : build.query({
+            query : ( token ) => ({
+                url : "/user",
+                headers : {
+                    "Authorization": "Bearer " + token
+                },
+                method : "GET",
+                redirect : "follow"
+            })
         })
     })
 })
 
 export const {
     useSignInMutation,
-    useSignUpMutation
+    useSignUpMutation,
+    useGetUserQuery
 } = AuthService

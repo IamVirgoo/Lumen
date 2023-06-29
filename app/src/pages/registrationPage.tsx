@@ -12,7 +12,7 @@ export default function RegistrationPage() {
     const [password, setPassword] = useState<string>("")
     const [confirmPassword, setConfirmPassword] = useState<string>("")
 
-    const [registrationUser, {isLoading, isError, isSuccess}] = useSignUpMutation()
+    const [registrationUser, { isLoading, isError, isSuccess}] = useSignUpMutation()
 
     const handleSubmit = async () => {
         try {

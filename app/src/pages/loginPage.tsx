@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSignInMutation } from "../services/authService";
-import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { useAppDispatch } from "../hooks/redux";
 import { logIn } from "../store/reducers/UserPatientSlice";
-import { RootState } from "../store/store";
-import {IUserPatient} from "../models/IUserPatient";
 
 export default function LoginPage() {
     const dispatch = useAppDispatch()
@@ -17,22 +15,24 @@ export default function LoginPage() {
 
     const handleSubmit = async () => {
         try {
+            localStorage.setItem("authenticate", "true")
             await loginUser({
                 phone: Number(telephoneNumber),
                 password: password
             }).then((result : any) => {
                 console.log(result)
                 dispatch(logIn({
-                    name : result.data.user.name,
-                    surname : result.data.user.surname,
-                    patronymic : result.data.user.patronymic,
-                    phone_number : result.data.user.phone_number,
+                    name : result.data.name,
+                    surname : result.data.surname,
+                    patronymic : result.data.patronymic,
+                    phone_number : result.data.phone_number,
                     authenticate : true,
-                    access_token : result.data.access_token
+                    access_token : result.data.access_token.token
                 }))
                 navigator("/application")
             })
         } catch (error) {
+            localStorage.setItem("authenticate", "false")
             console.log(error);
         }
     }
