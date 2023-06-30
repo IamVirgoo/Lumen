@@ -7,7 +7,8 @@ const initialState: IUserPatient = {
     patronymic : "patronymic",
     phone_number : "0-000-000-0000",
     authenticate : true,
-    access_token : ""
+    access_token : "",
+    refresh_token : ""
 }
 
 export const IUserPatientSlice = createSlice({
@@ -20,7 +21,8 @@ export const IUserPatientSlice = createSlice({
             state.patronymic = action.payload.patronymic;
             state.phone_number = action.payload.phone_number;
             state.authenticate = action.payload.authenticate;
-            state.access_token = action.payload.access_token
+            state.access_token = action.payload.access_token;
+            state.refresh_token = action.payload.refresh_token
         },
         logOut : (state, action) => {
             state.name = "";
@@ -28,7 +30,8 @@ export const IUserPatientSlice = createSlice({
             state.patronymic = "";
             state.phone_number = "";
             state.authenticate = false;
-            state.access_token = ""
+            state.access_token = "";
+            state.refresh_token = "";
         }
     }
 })

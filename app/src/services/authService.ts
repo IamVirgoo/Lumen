@@ -29,11 +29,11 @@ export const AuthService = createApi({
                 body: JSON.stringify(auth)
             })
         }),
-        getUser : build.query({
-            query : ( token ) => ({
+        getUser : build.query<IUserPatient, string>({
+            query : ( arg ) => ({
                 url : "/user",
                 headers : {
-                    "Authorization": "Bearer " + token
+                    "Authorization": "Bearer " + arg
                 },
                 method : "GET",
                 redirect : "follow"

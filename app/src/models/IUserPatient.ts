@@ -4,7 +4,8 @@ export interface IUserPatient {
     patronymic : string;
     phone_number : string;
     authenticate : boolean;
-    access_token : string
+    access_token : string;
+    refresh_token : string
 }
 
 export interface IUserPatientLoginRequest {

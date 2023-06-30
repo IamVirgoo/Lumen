@@ -11,11 +11,10 @@ export default function LoginPage() {
     const [telephoneNumber, setTelephoneNumber] = useState<string>("")
     const [password, setPassword] = useState<string>("")
 
-    const [loginUser, {isLoading, isError, error, isSuccess}] = useSignInMutation();
+    const [loginUser, { isLoading, isError, error, isSuccess}] = useSignInMutation();
 
     const handleSubmit = async () => {
         try {
-            localStorage.setItem("authenticate", "true")
             await loginUser({
                 phone: Number(telephoneNumber),
                 password: password
@@ -27,8 +26,12 @@ export default function LoginPage() {
                     patronymic : result.data.patronymic,
                     phone_number : result.data.phone_number,
                     authenticate : true,
-                    access_token : result.data.access_token.token
+                    access_token : result.data.access_token.token,
+                    refresh_token : result.data.refresh_token.token
                 }))
+                localStorage.setItem("authenticate", "true")
+                localStorage.setItem("access_token", result.data.access_token.token)
+                localStorage.setItem("refresh_token", result.data.refresh_token.token)
                 navigator("/application")
             })
         } catch (error) {
