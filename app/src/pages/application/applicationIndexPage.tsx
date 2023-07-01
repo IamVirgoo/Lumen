@@ -43,7 +43,7 @@ export default function ApplicationIndexPage() {
                     <div className={'app-main--container--content'}>
                         <p className={'app-main--container--content--title'}>Мои записи</p>
                         <Swiper
-                            spaceBetween={250}
+                            spaceBetween={100}
                             slidesPerView={4}
                         >
                             { Records.map(value=>

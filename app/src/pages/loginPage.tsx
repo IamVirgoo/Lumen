@@ -1,8 +1,11 @@
-import { useState } from "react";
+import jwtDecode from "jwt-decode";
+
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSignInMutation } from "../services/authService";
 import { useAppDispatch } from "../hooks/redux";
 import { logIn } from "../store/reducers/UserPatientSlice";
+import { decoded_token } from "../models/IToken";
 
 export default function LoginPage() {
     const dispatch = useAppDispatch()
@@ -12,6 +15,23 @@ export default function LoginPage() {
     const [password, setPassword] = useState<string>("")
 
     const [loginUser, { isLoading, isError, error, isSuccess}] = useSignInMutation();
+
+    const ACCESS_TOKEN = localStorage.getItem("access_token");
+    const REFRESH_TOKEN = localStorage.getItem("refresh_token");
+
+    const DECODED_ACCESS_TOKEN : decoded_token = jwtDecode(ACCESS_TOKEN as string)
+    const DECODED_REFRESH_TOKEN : decoded_token = jwtDecode(REFRESH_TOKEN as string)
+
+    const currentDate = new Date()
+
+    useEffect(() => {
+        console.log(DECODED_ACCESS_TOKEN)
+        console.log(DECODED_REFRESH_TOKEN)
+
+        DECODED_ACCESS_TOKEN.exp * 1000 < currentDate.getTime()
+            ? console.log("Token expired")
+            : navigator('/application')
+    }, [])
 
     const handleSubmit = async () => {
         try {
