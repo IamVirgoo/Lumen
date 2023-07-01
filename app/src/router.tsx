@@ -6,6 +6,8 @@ import LoginPage from "./pages/loginPage";
 import RegistrationPage from "./pages/registrationPage";
 import ConfirmationPage from "./pages/confirmationPage";
 import ApplicationIndexPage from "./pages/application/applicationIndexPage";
+import DoctorProfile from "./pages/profiles/doctorProfile";
+import PatientProfile from "./pages/profiles/patientProfile";
 
 export const Router = createBrowserRouter([
     {
@@ -22,8 +24,16 @@ export const Router = createBrowserRouter([
         element : <RegistrationPage/>
     },
     {
-        path : "/confirmation",
+        path : '/confirmation',
         element : <ConfirmationPage/>
+    },
+    {
+        path : '/doctor/:id',
+        element : <DoctorProfile/>
+    },
+    {
+        path : '/patient/:id',
+        element : <PatientProfile/>
     },
     {
         path : "/application",

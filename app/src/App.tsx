@@ -8,6 +8,7 @@ import './styles/card.sass'
 import './styles/authentication.sass'
 import './styles/confirmation.sass'
 import './styles/sidebar.sass'
+import './styles/profile.sass'
 
 import { RouterProvider } from "react-router-dom";
 import { Router } from "./router";

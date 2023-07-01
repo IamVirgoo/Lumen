@@ -1,7 +1,7 @@
 import Header from "../components/landing/header";
 import Card from "../components/landing/card";
 
-import {Doctors, Services} from "../devtools/test-info";
+import { Doctors, Services } from "../devtools/test-info";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper";
 
@@ -16,7 +16,7 @@ export default function IndexPage() {
                 <div className={"hero--container--line"}/>
             </div>
         </section>
-        <section className={"services"}>
+        <section className={"services"} id={"services"}>
             <div className={"services--container"}>
                 <h2 className={"services--container--title"}>
                     Наши услуги
@@ -33,7 +33,8 @@ export default function IndexPage() {
                     >
                         { Services.map(value =>
                             <SwiperSlide><Card title={value.title}
-                                               description={value.description}/>
+                                               description={value.description}
+                                               link={''}/>
                             </SwiperSlide>
                         )}
                     </Swiper>
@@ -46,7 +47,7 @@ export default function IndexPage() {
                 <h2 className={"personal--container--title"}>
                     Наши врачи
                 </h2>
-                <div className={"personal--container--content"}>
+                <div className={"personal--container--content"} id={"doctors"}>
                     <Swiper
                         spaceBetween={-100}
                         slidesPerView={3}
@@ -56,9 +57,11 @@ export default function IndexPage() {
                         }}
                         modules={[Autoplay]}
                     >
-                        { Doctors.map(value =>
+                        { Doctors.map((value, index) =>
                             <SwiperSlide><Card title={value.title}
-                                               description={value.description}/>
+                                               description={value.description}
+                                               link={'/doctor/' + index}
+                            />
                             </SwiperSlide>
                         )}
                     </Swiper>

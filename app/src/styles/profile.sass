@@ -1,0 +1,61 @@
+@import "../global"
+
+.doctor
+  padding-top: 100px
+  &--container
+    @include container
+    &--title-wrapper
+      display: flex
+      align-items: center
+      justify-content: space-between
+      &--name
+        font-size: 40px
+        letter-spacing: .4em
+        color: $primary_white_color
+      &--link
+        font-size: 24px
+        letter-spacing: .2em
+        text-align: right
+        color: $primary_white_color
+        transition: 200ms ease-in
+        &:hover
+          color: $secondary_black_color
+          text-decoration: underline
+    &--content
+      display: flex
+      justify-content: space-between
+      align-items: flex-start
+      padding-top: 50px
+      gap: 30px
+      &__left
+        &--image
+          width: 280px
+          border-radius: 5px
+        &--button
+          @include formButton
+          width: 100%
+          &:hover
+            background-color: $primary_white_color
+            color: $secondary_black_color
+      &__right
+        &--info-title
+          font-size: 32px
+          letter-spacing: .4em
+          color: $primary_white_color
+          font-weight: 700
+        &--info
+          padding-top: 30px
+          display: flex
+          flex-direction: column
+          align-items: flex-start
+          gap: 10px
+          &--text
+            font-size: 24px
+            letter-spacing: .2em
+            color: $primary_white_color
+            span
+              letter-spacing: 0
+          &--spec
+            &--text
+              font-size: 24px
+              color: $primary_white_color

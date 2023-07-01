@@ -1,10 +1,13 @@
+import { Link } from "react-router-dom";
+
 interface ServiceProps {
     title? : string;
-    description?: string
+    description? : string;
+    link : string
 }
 
 export default function Card(props : ServiceProps) {
-    return <div className={"card"}>
+    return <Link to={props.link} target={'_blank'} className={"card"} style={{display: "block", textDecoration: "none", color: "#414141"}}>
         <div className={"card--content"}>
             <div className={"card--content--img"}/>
             <div className={"card--content--text-wrapper"}>
@@ -17,5 +20,5 @@ export default function Card(props : ServiceProps) {
                 {props.description || "Lorem ipsum dolor sit amet, consectetur adipiscing elit"}
             </p>
         </div>
-    </div>
+    </Link>
 }

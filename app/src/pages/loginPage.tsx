@@ -19,18 +19,20 @@ export default function LoginPage() {
     const ACCESS_TOKEN = localStorage.getItem("access_token");
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
 
-    const DECODED_ACCESS_TOKEN : decoded_token = jwtDecode(ACCESS_TOKEN as string)
-    const DECODED_REFRESH_TOKEN : decoded_token = jwtDecode(REFRESH_TOKEN as string)
-
     const currentDate = new Date()
 
     useEffect(() => {
-        console.log(DECODED_ACCESS_TOKEN)
-        console.log(DECODED_REFRESH_TOKEN)
+        if (ACCESS_TOKEN != null) {
+            const DECODED_ACCESS_TOKEN : decoded_token = jwtDecode(ACCESS_TOKEN as string)
+            const DECODED_REFRESH_TOKEN : decoded_token = jwtDecode(REFRESH_TOKEN as string)
 
-        DECODED_ACCESS_TOKEN.exp * 1000 < currentDate.getTime()
-            ? console.log("Token expired")
-            : navigator('/application')
+            console.log(DECODED_ACCESS_TOKEN)
+            console.log(DECODED_REFRESH_TOKEN)
+
+            DECODED_ACCESS_TOKEN.exp * 1000 < currentDate.getTime()
+                ? console.log("Token expired")
+                : navigator('/application')
+        }
     }, [])
 
     const handleSubmit = async () => {

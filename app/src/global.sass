@@ -30,7 +30,7 @@ $secondary_black_color: #414141
   border-radius: 5px
   font-size: 16px
   letter-spacing: .4em
-  padding: 15px
+  padding: 15px 0
   cursor: pointer
   transition: 200ms ease-in
 
@@ -48,11 +48,15 @@ body
   padding: 0
   font-family: 'Jost', sans-serif
   background-color: $primary_green_color
+  scroll-behavior: smooth
 
-h1, h2, h3, h4, h5, h6, p, a
+h1, h2, h3, h4, h5, h6, p, a, ul, li
   margin-block: 0
   padding-block: 0
   text-decoration: none
+
+.swiper-wrapper
+  padding: 10px 0
 
 ::-moz-viewport-scroll
   width: 0
