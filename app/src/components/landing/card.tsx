@@ -1,6 +1,6 @@
 interface ServiceProps {
-    serviceTitle? : string;
-    serviceDescription?: string
+    title? : string;
+    description?: string
 }
 
 export default function Card(props : ServiceProps) {
@@ -9,12 +9,12 @@ export default function Card(props : ServiceProps) {
             <div className={"card--content--img"}/>
             <div className={"card--content--text-wrapper"}>
                 <p className={"card--content--text-wrapper--title"}>
-                    {props.serviceTitle || "Title"}
+                    {props.title || "Title"}
                 </p>
                 <div className={"card--content--text-wrapper--line"}/>
             </div>
             <p className={"card--content--description"}>
-                {props.serviceDescription || "Lorem ipsum dolor sit amet, consectetur adipiscing elit"}
+                {props.description || "Lorem ipsum dolor sit amet, consectetur adipiscing elit"}
             </p>
         </div>
     </div>

@@ -1,6 +1,10 @@
 import Header from "../components/landing/header";
 import Card from "../components/landing/card";
 
+import {Doctors, Services} from "../devtools/test-info";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper";
+
 export default function IndexPage() {
     return <main>
         <Header/>
@@ -18,11 +22,21 @@ export default function IndexPage() {
                     Наши услуги
                 </h2>
                 <div className={"services--container--content"}>
-                    <Card/>
-                    <Card/>
-                    <Card/>
-                    <Card/>
-                    <Card/>
+                    <Swiper
+                        spaceBetween={-100}
+                        slidesPerView={3}
+                        autoplay={{
+                            delay: 3000,
+                            disableOnInteraction: false,
+                        }}
+                        modules={[Autoplay]}
+                    >
+                        { Services.map(value =>
+                            <SwiperSlide><Card title={value.title}
+                                               description={value.description}/>
+                            </SwiperSlide>
+                        )}
+                    </Swiper>
                 </div>
                 <div className={"services--container--line"}/>
             </div>
@@ -33,11 +47,21 @@ export default function IndexPage() {
                     Наши врачи
                 </h2>
                 <div className={"personal--container--content"}>
-                    <Card serviceTitle={"Name"}/>
-                    <Card serviceTitle={"Name"}/>
-                    <Card serviceTitle={"Name"}/>
-                    <Card serviceTitle={"Name"}/>
-                    <Card serviceTitle={"Name"}/>
+                    <Swiper
+                        spaceBetween={-100}
+                        slidesPerView={3}
+                        autoplay={{
+                            delay: 3000,
+                            disableOnInteraction: false,
+                        }}
+                        modules={[Autoplay]}
+                    >
+                        { Doctors.map(value =>
+                            <SwiperSlide><Card title={value.title}
+                                               description={value.description}/>
+                            </SwiperSlide>
+                        )}
+                    </Swiper>
                 </div>
                 <div className={"personal--container--line"}/>
             </div>
