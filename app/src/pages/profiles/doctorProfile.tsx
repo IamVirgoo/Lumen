@@ -14,7 +14,6 @@ export default function DoctorProfile() {
                 <div className={'doctor--container--title-wrapper'}>
                     <h1 className={'doctor--container--title-wrapper--name'}>{doctor.title}</h1>
                     <a
-                        href={''}
                         className={'doctor--container--title-wrapper--link'}
                         onClick={() => window.location.href = '/#doctors'}
                     >
