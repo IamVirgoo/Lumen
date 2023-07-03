@@ -8,9 +8,9 @@ import { useEffect } from "react";
 import { useGetUserQuery } from "../../services/authService";
 import { logIn } from "../../store/reducers/UserPatientSlice";
 import { useNavigate } from "react-router-dom";
+import { Records } from "../../devtools/test-info";
 
 import 'swiper/css';
-import {Records} from "../../devtools/test-info";
 
 export default function ApplicationIndexPage() {
     const navigator = useNavigate()
@@ -42,25 +42,6 @@ export default function ApplicationIndexPage() {
                 <div className={'app-main--container'}>
                     <div className={'app-main--container--content'}>
                         <p className={'app-main--container--content--title'}>Мои записи</p>
-                        <Swiper
-                            spaceBetween={0}
-                            slidesPerView={4}
-                        >
-                            { Records.map(value=>
-                                <SwiperSlide><RecordCard
-                                    type={value.type}
-                                    title={value.title}
-                                    data={value.data}
-                                    doctor={value.doctor}
-                                    time={value.time}
-                                /></SwiperSlide>
-                            )}
-                        </Swiper>
-                    </div>
-                    <div className={'app-main--container--content'} style={{
-                        paddingTop: "20px"
-                    }}>
-                        <p className={'app-main--container--content--title'}>История посещений</p>
                         <Swiper
                             spaceBetween={0}
                             slidesPerView={4}

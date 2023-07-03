@@ -1,17 +1,39 @@
 @import "../global"
 
 .sidebar
-  width: 44px
-  background-color: $secondary_white_color
-  color: #000
-  display: flex
-  flex-direction: column
-  justify-content: space-between
   position: fixed
   left: 0
   top: 0
   bottom: 0
-  z-index: 9999999
+  width: 70px
+  background-color: $secondary_white_color
+  display: flex
+  flex-direction: column
+  justify-content: space-between
+  z-index: 10
   border-radius: 10px
-  padding: 20px
+  padding: 10px
   margin: 20px
+  &--heading
+    text-align: center
+    font-size: 18px
+    font-weight: 700
+    letter-spacing: .2em
+    margin-right: -.2em
+    color: $secondary_black_color
+  &--lower
+    padding: 5px
+    border-radius: 5px
+    border: 1px solid $secondary_black_color
+    transition: 200ms ease-in
+    cursor: pointer
+    p
+      font-size: 18px
+      letter-spacing: .2em
+      margin-right: -.2em
+      color: $secondary_black_color
+    &:hover
+      background-color: $secondary_black_color
+      border: none
+      p
+        color: $primary_white_color

@@ -9,6 +9,7 @@ header,
   top: 0
   backdrop-filter: blur(10px)
   &--container
+    position: relative
     @include container
     &--line
       @include line
@@ -17,6 +18,43 @@ header,
       justify-content: space-between
       align-items: center
       padding: 10px 0
+      &--dropdown
+        &__services
+          transition: 200ms ease-in
+          cursor: pointer
+          &--wrapper
+            position: absolute
+            right: 0
+            width: 200px
+            height: 25px
+            visibility: hidden
+            opacity: 0
+          &--content
+            display: flex
+            flex-direction: column
+            align-items: center
+            position: absolute
+            right: 0
+            margin-top: 23px
+            padding: 10px
+            gap: 15px
+            background-color: $secondary_white_color
+            visibility: hidden
+            opacity: 0
+            transition: 200ms ease-in
+            border-radius: 5px 0 5px 5px
+            p
+              font-size: 18px
+              letter-spacing: .2em
+              margin-right: -.2em
+        &:hover
+          transition: 200ms ease-in
+          .header--container--content--dropdown__services--wrapper
+            visibility: visible
+          .header--container--content--dropdown__services--content
+            visibility: visible
+            opacity: 1
+            transition: 200ms ease-in
       &--title
         font-size: 24px
         letter-spacing: .4em
@@ -29,13 +67,55 @@ header,
         font-size: 16px
         letter-spacing: .08em
         color: $secondary_black_color
+      &--user-wrapper
+        display: flex
+        align-items: center
+        gap: 10px
+        padding: 5px
+        border: 1px solid $primary_white_color
+        border-radius: 5px
+        cursor: pointer
+        &__username
+          font-size: 24px
+          letter-spacing: .2em
+          margin-right: -.2em
+          color: $primary_white_color
+        &__image
+          display: flex
+          justify-content: center
+          align-items: center
+          background-color: $primary_white_color
+          width: 32px
+          height: 32px
+          border-radius: 32px
+          p
+            font-size: 16px
+            text-transform: capitalize
+        &--dropdown-wrapper
+          position: absolute
+          left: 0
+          width: 200px
+          height: 20px
+          visibility: hidden
+          opacity: 0
+        &--dropdown-content
+          display: flex
+          flex-direction: column
+          align-items: center
+          gap: 10px
+          position: absolute
+          right: 0
+          margin-top: 25px
+        &:hover
+          background-color: $secondary_black_color
+          transition: 200ms ease-in
 
 .app-header
   background-color: #D9D9D9
   border-radius: 10px
   position: fixed
   right: 20px
-  left: 120px
+  left: 130px
   top: 20px
   &--container
     padding: 10px

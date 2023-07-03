@@ -48,8 +48,12 @@
   border-radius: 5px
   background-color: $secondary_white_color
   padding: 10px
+  transition: 200ms ease-in
+  cursor: auto
   @media screen and (width <= 1440px)
     width: 250px
+  &:hover
+    box-shadow: 0 0 15px 0 rgba($primary_white_color, .5)
   &--content
     display: flex
     flex-direction: column

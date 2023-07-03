@@ -1,27 +1,20 @@
 import Header from "../../components/landing/header";
 import Modal from "react-modal";
+import jwtDecode from "jwt-decode";
 
-import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { devDoctors } from "../../devtools/test-info";
-
-/*const customStyles = {
-    content: {
-        top: '50%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)',
-        borderRadius: '15px',
-        backgroundColor: '#21232E',
-        border: 'none'
-    }
-};*/
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { RootState } from "../../store/store";
+import { useGetUserQuery } from "../../services/authService";
+import { decoded_token } from "../../models/IToken";
+import { logIn } from "../../store/reducers/UserPatientSlice";
 
 export default function DoctorProfile() {
     const { id } = useParams()
 
+    const dispatch = useAppDispatch()
     const doctor = devDoctors[Number(id)]
     let subtitle
 
@@ -30,6 +23,43 @@ export default function DoctorProfile() {
 
     const open = () => setModalIsOpen(true);
     const close = () => setModalIsOpen(false)
+
+    const [type, setType] = useState<boolean>(false)
+
+    const ACCESS_TOKEN = localStorage.getItem("access_token");
+    const REFRESH_TOKEN = localStorage.getItem("refresh_token");
+
+    const result = useGetUserQuery(localStorage.getItem("access_token") as string)
+
+    const currentData = new Date()
+
+    useEffect(() => {
+        if (ACCESS_TOKEN != null) {
+            const DECODED_ACCESS_TOKEN : decoded_token = jwtDecode(ACCESS_TOKEN as string)
+            const DECODED_REFRESH_TOKEN : decoded_token = jwtDecode(REFRESH_TOKEN as string)
+
+            console.log(DECODED_ACCESS_TOKEN)
+            console.log(DECODED_REFRESH_TOKEN)
+
+            if (DECODED_ACCESS_TOKEN.exp * 1000 < currentData.getTime()) {
+                setType(false)
+                console.log("token expired")
+            } else {
+                setType(true)
+                if (result.isSuccess) {
+                    dispatch(logIn({
+                        name: result.data.name,
+                        surname: result.data.surname,
+                        patronymic: result.data.patronymic,
+                        phone_number: result.data.phone_number,
+                        authenticate: true,
+                        access_token: localStorage.getItem("access_token") as string,
+                        refresh_token: localStorage.getItem("refresh_token") as string
+                    }))
+                }
+            }
+        }
+    }, [result])
 
     return <main>
         <Header/>
@@ -95,38 +125,53 @@ export default function DoctorProfile() {
         >
             <div className={'modal'}>
                 <form className={'modal--container'}>
-                    <div className={'modal--container--title-wrapper'}>
-                        <h1 className={'modal--container--title-wrapper__text'}
-                            ref={(_subtitle) => (subtitle = _subtitle)}
-                        >Запишитесь на приём</h1>
-                        <div className={'modal--container--title-wrapper__line'}></div>
-                    </div>
-                    <div className={'modal--container--content'}>
-                        <div className={'modal--container--content__dates'}>
-                            { doctor.devInfo.dates.map(value =>
-                                <div className={'modal--container--content__dates--date'}>
-                                    <p className={'modal--container--content__dates--date__text'}
-                                    >{value.data}</p>
-                                    <p className={'modal--container--content__dates--date__time'}>04.07</p>
+                    { type
+                        ? <>
+                            <div className={'modal--container--title-wrapper'}>
+                                <h1 className={'modal--container--title-wrapper__text'}
+                                    ref={(_subtitle) => (subtitle = _subtitle)}
+                                >Запишитесь на приём</h1>
+                                <div className={'modal--container--title-wrapper__line'}></div>
+                            </div>
+                            <div className={'modal--container--content'}>
+                                <div className={'modal--container--content__dates'}>
+                                    { doctor.devInfo.dates.map(value =>
+                                        <div className={'modal--container--content__dates--date'}>
+                                            <p className={'modal--container--content__dates--date__text'}
+                                            >{value.data}</p>
+                                            <p className={'modal--container--content__dates--date__time'}>04.07</p>
+                                        </div>
+                                    )}
                                 </div>
-                            )}
-                        </div>
-                        <div className={'modal--container--content__line'}/>
-                        <div className={'modal--container--content__times'}>
-                            { doctor.devInfo.dates.map(value => <>
-                                { value.times.map(value => <div className={'modal--container--content__times--time'}>
-                                    <p className={'modal--container--content__times--time__text'}>{value}</p>
-                                </div>)}
-                                {/*TODO : сделать так, чтобы время выводилось конркетно для выбранной даты*/}
-                            </>)}
-                        </div>
-                    </div>
-                    <div className={'modal--container--content__line'}/>
-                    <button type={'button'}
-                            className={'modal--container--content__button'}
-                    >
-                        Записаться
-                    </button>
+                                <div className={'modal--container--content__line'}/>
+                                <div className={'modal--container--content__times'}>
+                                    { doctor.devInfo.dates.map(value => <>
+                                        { value.times.map(value => <div className={'modal--container--content__times--time'}>
+                                            <p className={'modal--container--content__times--time__text'}>{value}</p>
+                                        </div>)}
+                                        {/*TODO : сделать так, чтобы время выводилось конркетно для выбранной даты*/}
+                                    </>)}
+                                </div>
+                            </div>
+                            <div className={'modal--container--content__line'}/>
+                            <button type={'button'}
+                                    className={'modal--container--content__button'}
+                            >
+                                Записаться
+                            </button>
+                        </>
+                        : <>
+                            <div className={'modal--container--title-wrapper'}>
+                                <h1 className={'modal--container--title-wrapper__text'}
+                                    ref={(_subtitle) => (subtitle = _subtitle)}
+                                >Запишитесь на приём</h1>
+                                <div className={'modal--container--title-wrapper__line'}></div>
+                            </div>
+                            <Link to={'/sign-in'} className={'modal--container--warning'}>
+                                Войдите в систему
+                            </Link>
+                        </>
+                    }
                 </form>
             </div>
         </Modal>

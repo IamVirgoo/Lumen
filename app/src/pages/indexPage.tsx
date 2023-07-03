@@ -52,7 +52,7 @@ export default function IndexPage() {
                         spaceBetween={-100}
                         slidesPerView={3}
                         autoplay={{
-                            delay: 3000,
+                            delay: 2500,
                             disableOnInteraction: false,
                         }}
                         modules={[Autoplay]}
