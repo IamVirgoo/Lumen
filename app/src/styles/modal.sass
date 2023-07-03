@@ -1,0 +1,83 @@
+@import "../global"
+
+.modal
+  display: flex
+  flex-direction: column
+  align-items: center
+  gap: 30px
+  &--overlay
+    position: fixed
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    backdrop-filter: blur(5px)
+    z-index: 11
+  &--container
+    display: flex
+    flex-direction: column
+    align-items: flex-start
+    gap: 10px
+    &__line
+      @include line
+      margin-top: 0
+    &--title-wrapper
+      &__text
+        font-size: 32px
+        color: $primary_white_color
+        letter-spacing: .4em
+        margin-right: -.4em
+      &__line
+        margin-top: 10px
+        @include line
+    &--content
+      display: flex
+      flex-direction: column
+      align-items: flex-start
+      padding: 5px 0
+      gap: 10px
+      &__line
+        @include line
+      &__dates
+        display: flex
+        align-items: center
+        gap: 10px
+        &--date
+          width: 70px
+          display: flex
+          flex-direction: column
+          align-items: center
+          border: 1px solid $primary_white_color
+          border-radius: 5px
+          padding: 5px
+          cursor: pointer
+          color: $primary_white_color
+          transition: 200ms ease-in
+          letter-spacing: .2em
+          margin-right: -.2em
+          &:hover
+            background-color: $secondary_black_color
+      &__times
+        display: flex
+        align-items: center
+        gap: 10px
+        &--time
+          width: 70px
+          padding: 5px
+          border: 1px solid $primary_white_color
+          border-radius: 5px
+          cursor: pointer
+          transition: 200ms ease-in
+          &__text
+            text-align: center
+            letter-spacing: .2em
+            margin-right: -.2em
+            color: $primary_white_color
+          &:hover
+            background-color: $secondary_black_color
+      &__button
+        @include formButton
+        width: 100% !important
+        &:hover
+          background-color: $primary_white_color
+          color: $secondary_black_color

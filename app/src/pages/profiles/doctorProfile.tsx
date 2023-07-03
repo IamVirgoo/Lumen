@@ -1,11 +1,35 @@
 import Header from "../../components/landing/header";
+import Modal from "react-modal";
 
 import { useParams } from "react-router-dom";
-import { Doctors } from "../../devtools/test-info";
+import { useState } from "react";
+import { devDoctors } from "../../devtools/test-info";
+
+/*const customStyles = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        borderRadius: '15px',
+        backgroundColor: '#21232E',
+        border: 'none'
+    }
+};*/
 
 export default function DoctorProfile() {
     const { id } = useParams()
-    const doctor = Doctors[Number(id)]
+
+    const doctor = devDoctors[Number(id)]
+    let subtitle
+
+    const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+    const [flag, setFlag] = useState<boolean>(true)
+
+    const open = () => setModalIsOpen(true);
+    const close = () => setModalIsOpen(false)
 
     return <main>
         <Header/>
@@ -14,8 +38,8 @@ export default function DoctorProfile() {
                 <div className={'doctor--container--title-wrapper'}>
                     <h1 className={'doctor--container--title-wrapper--name'}>{doctor.title}</h1>
                     <a
+                        href={'/#doctors'}
                         className={'doctor--container--title-wrapper--link'}
-                        onClick={() => window.location.href = '/#doctors'}
                     >
                         Все доктора
                     </a>
@@ -26,6 +50,7 @@ export default function DoctorProfile() {
                         <button
                             type={'button'}
                             className={'doctor--container--content__left--button'}
+                            onClick={open}
                         >
                             Записаться
                         </button>
@@ -48,5 +73,62 @@ export default function DoctorProfile() {
                 </div>
             </div>
         </section>
+        <Modal
+            isOpen={modalIsOpen}
+            onRequestClose={close}
+            style={{
+                content: {
+                    top: '50%',
+                    left: '50%',
+                    right: 'auto',
+                    bottom: 'auto',
+                    marginRight: '-50%',
+                    transform: 'translate(-50%, -50%)',
+                    borderRadius: '5px',
+                    backgroundColor: '#407468',
+                    border: '1px solid #FFFF',
+                    zIndex: 9999
+                }
+            }}
+            contentLabel="Example Modal"
+            overlayClassName='modal--overlay'
+        >
+            <div className={'modal'}>
+                <form className={'modal--container'}>
+                    <div className={'modal--container--title-wrapper'}>
+                        <h1 className={'modal--container--title-wrapper__text'}
+                            ref={(_subtitle) => (subtitle = _subtitle)}
+                        >Запишитесь на приём</h1>
+                        <div className={'modal--container--title-wrapper__line'}></div>
+                    </div>
+                    <div className={'modal--container--content'}>
+                        <div className={'modal--container--content__dates'}>
+                            { doctor.devInfo.dates.map(value =>
+                                <div className={'modal--container--content__dates--date'}>
+                                    <p className={'modal--container--content__dates--date__text'}
+                                    >{value.data}</p>
+                                    <p className={'modal--container--content__dates--date__time'}>04.07</p>
+                                </div>
+                            )}
+                        </div>
+                        <div className={'modal--container--content__line'}/>
+                        <div className={'modal--container--content__times'}>
+                            { doctor.devInfo.dates.map(value => <>
+                                { value.times.map(value => <div className={'modal--container--content__times--time'}>
+                                    <p className={'modal--container--content__times--time__text'}>{value}</p>
+                                </div>)}
+                                {/*TODO : сделать так, чтобы время выводилось конркетно для выбранной даты*/}
+                            </>)}
+                        </div>
+                    </div>
+                    <div className={'modal--container--content__line'}/>
+                    <button type={'button'}
+                            className={'modal--container--content__button'}
+                    >
+                        Записаться
+                    </button>
+                </form>
+            </div>
+        </Modal>
     </main>
 }

@@ -1,7 +1,7 @@
 import Header from "../components/landing/header";
 import Card from "../components/landing/card";
 
-import { Doctors, Services } from "../devtools/test-info";
+import { devDoctors, Services } from "../devtools/test-info";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper";
 
@@ -42,12 +42,12 @@ export default function IndexPage() {
                 <div className={"services--container--line"}/>
             </div>
         </section>
-        <section className={"personal"}>
+        <section className={"personal"} id='doctors'>
             <div className={"personal--container"}>
                 <h2 className={"personal--container--title"}>
                     Наши врачи
                 </h2>
-                <div className={"personal--container--content"} id={"doctors"}>
+                <div className={"personal--container--content"}>
                     <Swiper
                         spaceBetween={-100}
                         slidesPerView={3}
@@ -57,7 +57,7 @@ export default function IndexPage() {
                         }}
                         modules={[Autoplay]}
                     >
-                        { Doctors.map((value, index) =>
+                        { devDoctors.map((value, index) =>
                             <SwiperSlide><Card title={value.title}
                                                description={value.description}
                                                link={'/doctor/' + index}
