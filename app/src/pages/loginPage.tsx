@@ -1,5 +1,6 @@
 import jwtDecode from "jwt-decode";
 
+import addNotification, { Notifications } from "react-push-notification";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSignInMutation } from "../services/authService";
@@ -14,7 +15,7 @@ export default function LoginPage() {
     const [telephoneNumber, setTelephoneNumber] = useState<string>("")
     const [password, setPassword] = useState<string>("")
 
-    const [loginUser, { isLoading, isError, error, isSuccess}] = useSignInMutation();
+    const [loginUser, {isLoading, isError, error, isSuccess}] = useSignInMutation();
 
     const ACCESS_TOKEN = localStorage.getItem("access_token");
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
@@ -35,35 +36,38 @@ export default function LoginPage() {
         }
     }, [])
 
-    const handleSubmit = async () => {
+    const handle = async () => {
+        const result : any = await loginUser({
+            phone: Number(telephoneNumber),
+            password: password
+        })
         try {
-            await loginUser({
-                phone: Number(telephoneNumber),
-                password: password
-            }).then((result : any) => {
-                console.log(result)
-                dispatch(logIn({
-                    name : result.data.name,
-                    surname : result.data.surname,
-                    patronymic : result.data.patronymic,
-                    phone_number : result.data.phone_number,
-                    authenticate : true,
-                    access_token : result.data.access_token.token,
-                    refresh_token : result.data.refresh_token.token
-                }))
-                localStorage.setItem("authenticate", "true")
-                localStorage.setItem("access_token", result.data.access_token.token)
-                localStorage.setItem("refresh_token", result.data.refresh_token.token)
-                navigator("/application")
-            })
+            dispatch(logIn({
+                name : result.data.name,
+                surname : result.data.surname,
+                patronymic : result.data.patronymic,
+                phone_number : result.data.phone_number,
+                authenticate : true,
+                access_token : result.data.access_token.token,
+                refresh_token : result.data.refresh_token.token
+            }))
+            localStorage.setItem("authenticate", "true")
+            localStorage.setItem("access_token", result.data.access_token.token)
+            localStorage.setItem("refresh_token", result.data.refresh_token.token)
+            navigator("/application")
         } catch (error) {
-            localStorage.setItem("authenticate", "false")
-            console.log(error);
+            console.log(result.error.data.detail)
+            addNotification({
+                title: 'Error',
+                subtitle: result.error.data.detail,
+                theme: 'light'
+            })
         }
     }
 
     return (
         <main>
+            <Notifications position={'top-right'}/>
             <section className={"sign-in"}>
                 <div className={"sign-in--container"}>
                     <h1 className={"sign-in--container--title"}>
@@ -88,7 +92,7 @@ export default function LoginPage() {
                             <button
                                 className={"sign-in--container--form--button-wrapper--button"}
                                 type="button"
-                                onClick={handleSubmit}
+                                onClick={handle}
                             >
                                 Войти
                             </button>
