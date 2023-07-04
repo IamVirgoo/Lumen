@@ -13,6 +13,22 @@
       color: $primary_white_color
     &--form
       @include form
+      &__phone
+        display: flex
+        align-items: center
+        gap: 10px
+        &--input
+          @include formInput
+          width: 170px
+        &--input::placeholder
+          color: $secondary_black_color
+        &--code
+          @include formButton
+          letter-spacing: .2em
+          width: 170px
+          &:hover
+            background-color: $secondary_white_color
+            color: $secondary_black_color
       &--input
         @include formInput
       &--input::placeholder
@@ -20,9 +36,9 @@
       &--button-wrapper
         &--button
           @include formButton
-        &--button:hover
-          background-color: $secondary_white_color
-          color: $secondary_black_color
+          &:hover
+            background-color: $secondary_white_color
+            color: $secondary_black_color
         &--text
           padding-top: 5px
           font-size: 16px

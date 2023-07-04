@@ -19,7 +19,6 @@ export default function Header() {
     const USER = useAppSelector((state : RootState) => state.userPatient)
 
     const result = useGetUserQuery(localStorage.getItem("access_token") as string)
-    if (result.isError) console.log("request error")
 
     const currentData = new Date()
 
@@ -74,6 +73,7 @@ export default function Header() {
                                 <p onClick={() => {
                                     dispatch(logOut)
                                     localStorage.clear()
+                                    window.location.reload()
                                 }}>Выйти</p>
                             </div>
                         </div>

@@ -89,3 +89,18 @@
         &:hover
           background-color: $primary_white_color
           color: $secondary_black_color
+    &--content-confirm
+      display: flex
+      flex-direction: column
+      align-items: center
+      padding: 5px 0
+      gap: 10px
+      &--input
+        @include formInput
+        &::placeholder
+          color: $secondary_black_color
+      &--button
+        @include formButton
+        &:hover
+          background-color: $secondary_white_color
+          color: $secondary_black_color

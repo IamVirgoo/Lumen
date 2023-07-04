@@ -38,12 +38,33 @@ export const AuthService = createApi({
                 method : "GET",
                 redirect : "follow"
             })
+        }),
+        sendCode : build.query<any, string>({
+            query : ( telephone ) => ({
+                url : '/send_confirm_sms?number=' + telephone,
+                method : "GET",
+            })
+        }),
+        confirmCode : build.query<any, { telephone : string, confirmCode : string }>({
+            query : ( arg ) => ({
+                url : '/confirm_code?number=' + arg.telephone + '&code=' + arg.confirmCode,
+                headers : {
+                    "Content-Type": "application/json"
+                },
+                method : "GET",
+                redirect : "follow"
+            })
         })
     })
 })
 
+/*
+* useSendCodeQuery and useConfirmCodeQuery - not works
+* */
 export const {
     useSignInMutation,
     useSignUpMutation,
-    useGetUserQuery
+    useGetUserQuery,
+    useSendCodeQuery,
+    useConfirmCodeQuery
 } = AuthService
