@@ -12,24 +12,24 @@ services:
       - ./volumes/nginx/conf.d/:/etc/nginx/conf.d
       - ./volumes/nginx/logs/nginx:/var/log/nginx
     links:
-      - medsoft
+      - lumen
 
   db:
     image: postgres:14
-    container_name: db_medsoft
+    container_name: db_lumen
     ports:
       - "5433:5432"
     env_file:
       - .env-prod
 
-  medsoft:
-    image: vadim2422/medsoft:latest
+  lumen:
+    image: vadim2422/lumen:latest
     env_file:
       - .env-prod
-    container_name: medsoft_app
+    container_name: lumen_app
     environment:
       - TZ=Europe/Moscow
-    command: sh -c  "sleep 5 && alembic upgrade head && gunicorn src.main:app --workers 1 --worker-class uvicorn.workers.UvicornWorker --bind=0.0.0.0:8000"
+    command: sh -c  "sleep 5 && alembic upgrade head && python3 generate_data.py && gunicorn src.main:app --workers 1 --worker-class uvicorn.workers.UvicornWorker --bind=0.0.0.0:8000"
     ports:
       - 8888:8000
     tty: true

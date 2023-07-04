@@ -1041,3 +1041,7 @@
 172.20.0.1 - - [04/Jul/2023:15:30:21 +0000] "GET /sign-in HTTP/1.1" 304 0 "http://localhost/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" "-"
 172.20.0.1 - - [04/Jul/2023:15:30:21 +0000] "GET /assets/index-2e55375f.css HTTP/1.1" 304 0 "http://localhost/sign-in" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" "-"
 172.20.0.1 - - [04/Jul/2023:15:30:21 +0000] "GET /assets/index-8be8c4c6.js HTTP/1.1" 304 0 "http://localhost/sign-in" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" "-"
+172.28.0.1 - - [04/Jul/2023:19:37:28 +0000] "GET /lumen/doctors HTTP/1.1" 200 2038 "-" "PostmanRuntime/7.32.3" "-"
+172.28.0.1 - - [04/Jul/2023:19:37:48 +0000] "GET /lumen/doctors HTTP/1.1" 200 2038 "-" "PostmanRuntime/7.32.3" "-"
+172.28.0.1 - - [04/Jul/2023:19:37:49 +0000] "GET /lumen/doctors HTTP/1.1" 200 2038 "-" "PostmanRuntime/7.32.3" "-"
+172.28.0.1 - - [04/Jul/2023:19:38:08 +0000] "GET /lumen/doctors/3 HTTP/1.1" 200 5343 "-" "PostmanRuntime/7.32.3" "-"
