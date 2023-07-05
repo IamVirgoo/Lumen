@@ -1,12 +1,13 @@
 import jwtDecode from "jwt-decode";
 
-import addNotification, { Notifications } from "react-push-notification";
+import { Notifications } from "react-push-notification";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSignInMutation } from "../services/authService";
 import { useAppDispatch } from "../hooks/redux";
 import { logIn } from "../store/reducers/UserPatientSlice";
 import { decoded_token } from "../models/IToken";
+import {errorHandler} from "../devtools/validationHandlers";
 
 export default function LoginPage() {
     const dispatch = useAppDispatch()
@@ -56,12 +57,7 @@ export default function LoginPage() {
             localStorage.setItem("refresh_token", result.data.refresh_token.token)
             navigator("/application")
         } catch (error) {
-            console.log(result.error.data.detail)
-            addNotification({
-                title: 'Error',
-                subtitle: result.error.data.detail,
-                theme: 'light'
-            })
+            errorHandler(result.error.data.detail)
         }
     }
 

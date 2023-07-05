@@ -9,6 +9,8 @@ import { useGetUserQuery } from "../../services/authService";
 import { decoded_token } from "../../models/IToken";
 import { logIn } from "../../store/reducers/UserPatientSlice";
 import { useGetDoctorQuery } from "../../services/dataService";
+import {errorHandler} from "../../devtools/validationHandlers";
+import {Notifications} from "react-push-notification";
 
 export default function DoctorProfile() {
     const { id } = useParams()
@@ -24,10 +26,11 @@ export default function DoctorProfile() {
     const ACCESS_TOKEN = localStorage.getItem("access_token");
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
 
-    const result = useGetUserQuery(localStorage.getItem("access_token") as string)
+    const result = useGetUserQuery(ACCESS_TOKEN as string)
     const doctor = useGetDoctorQuery(id as string)
-    const open = () => setModalIsOpen(true);
-    const close = () => setModalIsOpen(false)
+
+    const openModal = () => setModalIsOpen(true);
+    const closeModal = () => setModalIsOpen(false)
 
     const currentData = new Date()
 
@@ -59,9 +62,14 @@ export default function DoctorProfile() {
         }
     }, [result])
 
-    if (doctor.isSuccess) {
+    const handleRecord = () => {
+        if (date == '') errorHandler('Выберите дату')
+        if (time == '') errorHandler("Выберите время")
+    }
 
+    if (doctor.isSuccess) {
         return <main>
+            <Notifications position={'top-right'}/>
             <Header/>
             <section className={'doctor'}>
                 <div className={'doctor--container'}>
@@ -80,7 +88,7 @@ export default function DoctorProfile() {
                             <button
                                 type={'button'}
                                 className={'doctor--container--content__left--button'}
-                                onClick={open}
+                                onClick={openModal}
                             >
                                 Записаться
                             </button>
@@ -105,7 +113,7 @@ export default function DoctorProfile() {
             </section>
             <Modal
                 isOpen={modalIsOpen}
-                onRequestClose={close}
+                onRequestClose={closeModal}
                 style={{
                     content: {
                         top: '50%',
@@ -165,16 +173,12 @@ export default function DoctorProfile() {
                                                 : <></>
                                             }
                                         </>) }
-                                        {/*{ doctor.devInfo.dates.map(value => <>
-                                            { value.times.map(value => <div className={'modal--container--content__times--time'}>
-                                                <p className={'modal--container--content__times--time__text'}>{value}</p>
-                                            </div>)}
-                                        </>)}*/}
                                     </div>
                                 </div>
                                 <div className={'modal--container--content__line'}/>
                                 <button type={'button'}
                                         className={'modal--container--content__button'}
+                                        onClick={handleRecord}
                                 >
                                     Записаться на <span>{date.substring(5)}</span> - <span>{time}</span>
                                 </button>

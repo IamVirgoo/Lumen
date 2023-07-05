@@ -1,13 +1,14 @@
 import Modal from "react-modal";
+import jwtDecode from "jwt-decode";
 
-import addNotification, { Notifications } from "react-push-notification";
-import {useEffect, useState} from "react";
+import { Notifications } from "react-push-notification";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSignUpMutation } from "../services/authService";
 import { useAppDispatch } from "../hooks/redux";
 import { logIn } from "../store/reducers/UserPatientSlice";
-import {decoded_token} from "../models/IToken";
-import jwtDecode from "jwt-decode";
+import { decoded_token } from "../models/IToken";
+import { errorHandler } from "../devtools/validationHandlers";
 
 export default function RegistrationPage() {
     const navigator = useNavigate()
@@ -15,13 +16,13 @@ export default function RegistrationPage() {
 
     let subtitle;
 
-    const [name, setName] = useState<string>("")
-    const [surname, setSurname] = useState<string>("")
-    const [patronymic, setPatronymic] = useState<string>("")
-    const [telephoneNumber, setTelephoneNumber] = useState<string>("")
-    const [password, setPassword] = useState<string>("")
-    const [confirmPassword, setConfirmPassword] = useState<string>("")
-    const [confirmCode, setConfirmCode] = useState<string>("")
+    const [name, setName] = useState<string | null>(null)
+    const [surname, setSurname] = useState<string | null>(null)
+    const [patronymic, setPatronymic] = useState<string | null>(null)
+    const [telephoneNumber, setTelephoneNumber] = useState<string>('')
+    const [password, setPassword] = useState<string | null>(null)
+    const [confirmPassword, setConfirmPassword] = useState<string | null>(null)
+    const [confirmCode, setConfirmCode] = useState<string | null>(null)
 
     const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
     const [registrationUser, { isLoading, isError, isSuccess}] = useSignUpMutation()
@@ -81,40 +82,40 @@ export default function RegistrationPage() {
         }
     }
 
+    const confirmPasswordValidation = (confirmPassword : string) => {
+        return confirmPassword === password
+    }
+
     const handleSubmit = async () => {
-        if (confirmStatus) {
-            try {
-                await registrationUser({
-                    name: name,
-                    surname: surname,
-                    patronymic: patronymic,
-                    phone_number: Number(telephoneNumber),
-                    password: password,
-                }).then((result : any) => {
-                    console.log(result)
-                    dispatch(logIn({
-                        name : result.data.name,
-                        surname : result.data.surname,
-                        patronymic : result.data.patronymic,
-                        phone_number : result.data.phone_number,
-                        authenticate : true,
-                        access_token : result.data.access_token.token,
-                        refresh_token : result.data.refresh_token.token
-                    }))
-                    localStorage.setItem("authenticate", "true")
-                    localStorage.setItem("access_token", result.data.access_token.token)
-                    localStorage.setItem("refresh_token", result.data.refresh_token.token)
-                    navigator('/sign-in')
-                })
-            } catch (error) {
-                console.log(error)
-            }
-        } else {
-            addNotification({
-                title: 'Warning',
-                subtitle: "Пожалуйста подтвердите телефон",
-                theme: 'light'
+        if (!confirmStatus) { errorHandler("Пожалуйста подтвердите телефон"); return; }
+        if (!name || !surname || !patronymic || !password || !confirmPassword) { errorHandler("ожалуйста заполните все поля"); return; }
+        if (!confirmPasswordValidation(confirmPassword)) { errorHandler("Пароли не совпадают"); return; }
+        try {
+            await registrationUser({
+                name: name,
+                surname: surname,
+                patronymic: patronymic,
+                phone_number: Number(telephoneNumber),
+                password: password,
+            }).then((result : any) => {
+                console.log(result)
+                dispatch(logIn({
+                    name : result.data.name,
+                    surname : result.data.surname,
+                    patronymic : result.data.patronymic,
+                    phone_number : result.data.phone_number,
+                    authenticate : true,
+                    access_token : result.data.access_token.token,
+                    refresh_token : result.data.refresh_token.token
+                }))
+                localStorage.setItem("authenticate", "true")
+                localStorage.setItem("access_token", result.data.access_token.token)
+                localStorage.setItem("refresh_token", result.data.refresh_token.token)
+                navigator('/sign-in')
             })
+        } catch (error : any) {
+            console.log(error.error)
+            errorHandler(error.error.data.detail as string)
         }
     }
 
@@ -180,7 +181,15 @@ export default function RegistrationPage() {
                     <input className={"sign-up--container--form--input"}
                            type="password"
                            placeholder={"Повторно введите пароль"}
-                           onChange={(e) => setConfirmPassword(e.target.value)}
+                           onChange={(e) => {
+                               if (!confirmPasswordValidation(e.target.value)) {
+                                   e.target.style.boxShadow = "0 0 15px rgb(225, 0, 0)"
+                               }
+                               else {
+                                   setConfirmPassword(e.target.value)
+                                   e.target.style.boxShadow = "0 0 15px rgb(0, 225, 0)"
+                               }
+                           }}
                     />
                     <div className={"sign-up--container--form--button-wrapper"}>
                         <input className={"sign-up--container--form--button-wrapper--button"}
