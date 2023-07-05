@@ -24,7 +24,6 @@ export default function Header() {
 
     useEffect(() => {
         if (ACCESS_TOKEN != null) {
-            console.log("start")
 
             const DECODED_ACCESS_TOKEN : decoded_token = jwtDecode(ACCESS_TOKEN as string)
             const DECODED_REFRESH_TOKEN : decoded_token = jwtDecode(REFRESH_TOKEN as string)
@@ -37,7 +36,6 @@ export default function Header() {
                 console.log("token expired")
             } else {
                 setType(true)
-                console.log("good")
                 if (result.isSuccess) {
                     dispatch(logIn({
                         name: result.data.name,

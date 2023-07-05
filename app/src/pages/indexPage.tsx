@@ -4,8 +4,23 @@ import Card from "../components/landing/card";
 import { devDoctors, Services } from "../devtools/test-info";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper";
+import { useGetDoctorsQuery } from "../services/dataService";
+import { useEffect } from "react";
+import { useAppDispatch } from "../hooks/redux";
 
 export default function IndexPage() {
+    const dispatch = useAppDispatch()
+
+    const doctors = useGetDoctorsQuery('')
+
+    useEffect(() => {
+        if (doctors.isSuccess) {
+            doctors.data.map(value => {
+                console.log(value)
+            })
+        }
+    }, [doctors])
+
     return <main>
         <Header/>
         <section className={"hero"}>
@@ -34,7 +49,9 @@ export default function IndexPage() {
                         { Services.map(value =>
                             <SwiperSlide><Card title={value.title}
                                                description={value.description}
-                                               link={''}/>
+                                               link={''}
+                                               image={''}
+                            />
                             </SwiperSlide>
                         )}
                     </Swiper>
@@ -48,23 +65,45 @@ export default function IndexPage() {
                     Наши врачи
                 </h2>
                 <div className={"personal--container--content"}>
-                    <Swiper
-                        spaceBetween={-100}
-                        slidesPerView={3}
-                        autoplay={{
-                            delay: 2500,
-                            disableOnInteraction: false,
-                        }}
-                        modules={[Autoplay]}
-                    >
-                        { devDoctors.map((value, index) =>
-                            <SwiperSlide><Card title={value.title}
-                                               description={value.description}
-                                               link={'/doctor/' + index}
-                            />
-                            </SwiperSlide>
-                        )}
-                    </Swiper>
+                    { doctors.isSuccess
+                        ? <Swiper
+                            spaceBetween={-100}
+                            slidesPerView={3}
+                            autoplay={{
+                                delay: 2500,
+                                disableOnInteraction: false,
+                            }}
+                            modules={[Autoplay]}
+                        >
+                            { doctors.data.map((value) =>
+                                <SwiperSlide>
+                                    <Card title={value.fio}
+                                          description={value.info}
+                                          link={`/doctor/${value.id}`}
+                                          image={`http://localhost/lumen/photo/${value.photo}`}
+                                    />
+                                </SwiperSlide>
+                            )}
+                        </Swiper>
+                        : <Swiper
+                            spaceBetween={-100}
+                            slidesPerView={3}
+                            autoplay={{
+                                delay: 2500,
+                                disableOnInteraction: false,
+                            }}
+                            modules={[Autoplay]}
+                        >
+                            { devDoctors.map((value, index) =>
+                                <SwiperSlide><Card title={''}
+                                                   description={''}
+                                                   link={''}
+                                                   image={''}
+                                />
+                                </SwiperSlide>
+                            )}
+                        </Swiper>
+                    }
                 </div>
                 <div className={"personal--container--line"}/>
             </div>
