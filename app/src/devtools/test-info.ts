@@ -1,5 +1,6 @@
 export const Records = [
     {
+        id : 0,
         title : "Стоматология",
         doctor : "Айболит Валерий Вячеславович",
         data : "18.08.23",
@@ -7,6 +8,7 @@ export const Records = [
         type : "current"
     },
     {
+        id : 1,
         title : "Проктология",
         doctor : "Айкакбольно Сергей Сергеевич",
         data : "20.08.23",
@@ -14,6 +16,7 @@ export const Records = [
         type : "current"
     },
     {
+        id : 2,
         title : "Психотерапия",
         doctor : "Фрейд Зигмунд Иванович",
         data : "21.08.23",
@@ -21,6 +24,7 @@ export const Records = [
         type : "current"
     },
     {
+        id : 3,
         title : "Онкология",
         doctor : "Вячеслав Краб Ракович",
         data : "12.09.23",
@@ -28,6 +32,7 @@ export const Records = [
         type : "current"
     },
     {
+        id : 4,
         title : "Стоматология",
         doctor : "Айболит Валерий Вячеславович",
         data : "18.08.23",
@@ -35,6 +40,7 @@ export const Records = [
         type : "current"
     },
     {
+        id : 5,
         title : "Проктология",
         doctor : "Айкакбольно Сергей Сергеевич",
         data : "20.08.23",
@@ -42,6 +48,7 @@ export const Records = [
         type : "current"
     },
     {
+        id : 6,
         title : "Психотерапия",
         doctor : "Фрейд Зигмунд Иванович",
         data : "21.08.23",
@@ -49,6 +56,7 @@ export const Records = [
         type : "current"
     },
     {
+        id : 7,
         title : "Онкология",
         doctor : "Вячеслав Краб Ракович",
         data : "12.09.23",

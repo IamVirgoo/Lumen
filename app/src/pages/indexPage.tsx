@@ -5,21 +5,9 @@ import { devDoctors, Services } from "../devtools/test-info";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper";
 import { useGetDoctorsQuery } from "../services/dataService";
-import { useEffect } from "react";
-import { useAppDispatch } from "../hooks/redux";
 
 export default function IndexPage() {
-    const dispatch = useAppDispatch()
-
     const doctors = useGetDoctorsQuery('')
-
-    useEffect(() => {
-        if (doctors.isSuccess) {
-            doctors.data.map(value => {
-                console.log(value)
-            })
-        }
-    }, [doctors])
 
     return <main>
         <Header/>

@@ -24,16 +24,11 @@ export default function Header() {
 
     useEffect(() => {
         if (ACCESS_TOKEN != null) {
-
             const DECODED_ACCESS_TOKEN : decoded_token = jwtDecode(ACCESS_TOKEN as string)
             const DECODED_REFRESH_TOKEN : decoded_token = jwtDecode(REFRESH_TOKEN as string)
 
-            console.log(DECODED_ACCESS_TOKEN)
-            console.log(DECODED_REFRESH_TOKEN)
-
             if (DECODED_ACCESS_TOKEN.exp * 1000 < currentData.getTime()) {
                 setType(false)
-                console.log("token expired")
             } else {
                 setType(true)
                 if (result.isSuccess) {
@@ -46,7 +41,6 @@ export default function Header() {
                         access_token: localStorage.getItem("access_token") as string,
                         refresh_token: localStorage.getItem("refresh_token") as string
                     }))
-                    console.log(result)
                 }
                 if (result.isError) console.log("request error")
             }

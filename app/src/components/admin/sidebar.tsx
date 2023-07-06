@@ -8,9 +8,7 @@ export default function AppSidebar() {
 
     return <div className={'sidebar'}>
         <Link to={'/'} className={'sidebar--heading'}>Lumen</Link>
-        <div className={'sidebar--body'}>
-
-        </div>
+        <div className={'sidebar--body'}></div>
         <div className={'sidebar--lower'}>
             <p onClick={() => {
                 dispatch(logOut)

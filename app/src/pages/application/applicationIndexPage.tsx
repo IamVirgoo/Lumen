@@ -4,21 +4,33 @@ import RecordCard from "../../components/admin/user-patient/recordCard";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { RootState } from "../../store/store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useGetUserQuery } from "../../services/authService";
 import { logIn } from "../../store/reducers/UserPatientSlice";
 import { useNavigate } from "react-router-dom";
 import { Records } from "../../devtools/test-info";
 
 import 'swiper/css';
+import Modal from "react-modal";
 
 export default function ApplicationIndexPage() {
     const navigator = useNavigate()
     const dispatch = useAppDispatch()
+    let subtitle;
 
     const USER = useAppSelector((state : RootState) => state.userPatient)
 
-    const result = useGetUserQuery(localStorage.getItem("access_token") as string)
+    const result =
+        useGetUserQuery(localStorage.getItem("access_token") as string)
+
+    const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
+    const [recordId, setRecordId] = useState<string>('')
+
+    const openModal = (id : string) => {
+        setRecordId(id)
+        setModalIsOpen(true)
+    }
+    const closeModal = () => setModalIsOpen(false)
 
     useEffect(() => {
         if (result.isSuccess) {
@@ -53,11 +65,43 @@ export default function ApplicationIndexPage() {
                                     data={value.data}
                                     doctor={value.doctor}
                                     time={value.time}
+                                    click={() => openModal(String(value.id))}
                                 /></SwiperSlide>
                             )}
                         </Swiper>
                     </div>
                 </div>
+                <Modal
+                    isOpen={modalIsOpen}
+                    onRequestClose={closeModal}
+                    style={{
+                        content: {
+                            top: '50%',
+                            left: '50%',
+                            right: 'auto',
+                            bottom: 'auto',
+                            marginRight: '-50%',
+                            transform: 'translate(-50%, -50%)',
+                            borderRadius: '5px',
+                            backgroundColor: '#407468',
+                            border: '1px solid #FFFF',
+                            zIndex: 9999
+                        }
+                    }}
+                    contentLabel="Example Modal"
+                    overlayClassName='modal--overlay'
+                >
+                    <div className={'modal'}>
+                        <div className={'modal--container'}>
+                            <div className={'modal--container--title-wrapper'}>
+                                <h1 className={'modal--container--title-wrapper__text'}
+                                    ref={(_subtitle) => (subtitle = _subtitle)}
+                                >{recordId}</h1>
+                                <div className={'modal--container--title-wrapper__line'}></div>
+                            </div>
+                        </div>
+                    </div>
+                </Modal>
             </main>
             : <main className={'app-main'}>
                 <p>Not authenticated</p>
