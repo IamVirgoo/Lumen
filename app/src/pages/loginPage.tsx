@@ -39,7 +39,7 @@ export default function LoginPage() {
 
     const handle = async () => {
         const result : any = await loginUser({
-            phone: Number(telephoneNumber),
+            phone: telephoneNumber,
             password: password
         })
         try {

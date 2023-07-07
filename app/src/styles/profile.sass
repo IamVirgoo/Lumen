@@ -24,14 +24,27 @@
           text-decoration: underline
     &--content
       display: flex
-      justify-content: space-between
+      justify-content: center
       align-items: flex-start
       padding-top: 50px
       gap: 30px
       &__left
+        display: flex
+        flex-direction: column
+        align-items: flex-start
+        gap: 10px
         &--image
           width: 280px
           border-radius: 5px
+        &--price
+          border-radius: 5px
+          font-size: 16px
+          width: 280px
+          padding: 15px 0
+          letter-spacing: .2em
+          margin-right: -.2em
+          text-align: center
+          background-color: $secondary_white_color
         &--button
           @include formButton
           width: 280px

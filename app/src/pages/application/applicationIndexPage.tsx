@@ -1,5 +1,6 @@
 import AppHeader from "../../components/admin/header";
 import RecordCard from "../../components/admin/user-patient/recordCard";
+import Modal from "react-modal";
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
@@ -7,27 +8,41 @@ import { RootState } from "../../store/store";
 import { useEffect, useState } from "react";
 import { useGetUserQuery } from "../../services/authService";
 import { logIn } from "../../store/reducers/UserPatientSlice";
-import { useNavigate } from "react-router-dom";
-import { Records } from "../../devtools/test-info";
+import { Link, useNavigate } from "react-router-dom";
+import { useGetAppointmentQuery, useGetAppointmentsQuery, useGetDoctorQuery } from "../../services/dataService";
 
 import 'swiper/css';
-import Modal from "react-modal";
 
 export default function ApplicationIndexPage() {
     const navigator = useNavigate()
     const dispatch = useAppDispatch()
+
     let subtitle;
+
+    const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
+    const [recordId, setRecordId] = useState<number>()
+    const [doctorId, setDoctorId] = useState<string>()
 
     const USER = useAppSelector((state : RootState) => state.userPatient)
 
     const result =
         useGetUserQuery(localStorage.getItem("access_token") as string)
+    const appointments =
+        useGetAppointmentsQuery(localStorage.getItem("access_token") as string)
+    const doctor =
+        useGetDoctorQuery(doctorId as string)
+    const appointment =
+        useGetAppointmentQuery({
+            token : localStorage.getItem("access_token") as string,
+            id : Number(recordId)
+        })
 
-    const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
-    const [recordId, setRecordId] = useState<string>('')
-
-    const openModal = (id : string) => {
-        setRecordId(id)
+    const openModal = (record_Id : number, doctor_Id : string) => {
+        setDoctorId(doctor_Id)
+        setRecordId(record_Id)
+        console.log("added", record_Id)
+        console.log(doctor)
+        console.log(appointment)
         setModalIsOpen(true)
     }
     const closeModal = () => setModalIsOpen(false)
@@ -58,16 +73,22 @@ export default function ApplicationIndexPage() {
                             spaceBetween={0}
                             slidesPerView={4}
                         >
-                            { Records.map(value=>
-                                <SwiperSlide><RecordCard
-                                    type={value.type}
-                                    title={value.title}
-                                    data={value.data}
-                                    doctor={value.doctor}
-                                    time={value.time}
-                                    click={() => openModal(String(value.id))}
-                                /></SwiperSlide>
-                            )}
+                            { appointments.isSuccess
+                                ? <>{appointments.data.map((value : any) =>
+                                    <SwiperSlide><RecordCard
+                                        type={value.check as boolean}
+                                        title={value.info}
+                                        data={value.date.substring(0, 10)}
+                                        doctor={value.fio.split(" ", 2)[0] + " " + value.fio.split(" ", 2)[1]}
+                                        time={value.date.substring(11, 16)}
+                                        click={() => openModal(value.id, String(value.doctor_id))}
+                                    /></SwiperSlide>
+                                )}</>
+                                : <>{ appointments.isLoading
+                                    ? <>Загрузка...</>
+                                    : <>Записей нету</>
+                                }</>
+                            }
                         </Swiper>
                     </div>
                 </div>
@@ -92,14 +113,30 @@ export default function ApplicationIndexPage() {
                     overlayClassName='modal--overlay'
                 >
                     <div className={'modal'}>
-                        <div className={'modal--container'}>
-                            <div className={'modal--container--title-wrapper'}>
-                                <h1 className={'modal--container--title-wrapper__text'}
-                                    ref={(_subtitle) => (subtitle = _subtitle)}
-                                >{recordId}</h1>
-                                <div className={'modal--container--title-wrapper__line'}></div>
+                        { doctor.isSuccess
+                            ? <div className={'modal--container'}>
+                                <div className={'modal--container--title-wrapper'}>
+                                    <h1 className={'modal--container--title-wrapper__text'}
+                                        ref={(_subtitle) => (subtitle = _subtitle)}
+                                    >Подробности о записи</h1>
+                                    <div className={'modal--container--title-wrapper__line'}></div>
+                                    <div className={'modal--container--content'}>
+                                        <p className={'modal--container--content--card-text'}>Врач-специалист: <Link className={'modal--container--content--card-text__link'} to={`/doctor/${doctor.data.id}`}>{doctor.data.fio}</Link></p>
+                                        <div className={'modal--container--content__line'}/>
+                                        <p className={'modal--container--content--card-text'}>Короткая информация о враче: <span>{appointment.data.info}</span></p>
+                                        <div className={'modal--container--content__line'}/>
+                                        <p className={'modal--container--content--card-text'}>Дата и время приёма: <span>{appointment.data.date.substring(0, 10)} - {appointment.data.date.substring(11, 16)}</span></p>
+                                        <div className={'modal--container--content__line'}/>
+                                        <p className={'modal--container--content--card-text'}>Итоговый отчёт врача: <span>{appointment.data.anamnesis as string}</span></p>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                            : <>{ doctor.isLoading
+                                ? <>Загрузка...</>
+                                : <>Ошибочка(((</>
+                            }</>
+                        }
+
                     </div>
                 </Modal>
             </main>

@@ -9,7 +9,7 @@ export interface IUserPatient {
 }
 
 export interface IUserPatientLoginRequest {
-    phone : number;
+    phone : string;
     password : string
 }
 
@@ -17,6 +17,6 @@ export interface IUserPatientRegistrationRequest {
     name : string;
     surname : string;
     patronymic : string;
-    phone_number : number;
+    phone_number : string;
     password : string
 }

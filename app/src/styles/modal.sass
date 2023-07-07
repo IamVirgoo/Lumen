@@ -44,6 +44,21 @@
       align-items: flex-start
       padding: 5px 0
       gap: 10px
+      &--card-text
+        font-size: 24px
+        letter-spacing: .2em
+        margin-right: -.2em
+        color: $primary_white_color
+        &__link
+          letter-spacing: 0
+          color: $secondary_white_color
+          transition: 200ms ease-in
+          &:hover
+            color: $secondary_black_color
+            text-decoration: underline
+        span
+          letter-spacing: 0
+          color: $secondary_white_color
       &__line
         @include line
       &__dates

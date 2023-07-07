@@ -8,8 +8,8 @@ import { useAppDispatch } from "../../hooks/redux";
 import { useGetUserQuery } from "../../services/authService";
 import { decoded_token } from "../../models/IToken";
 import { logIn } from "../../store/reducers/UserPatientSlice";
-import { useGetDoctorQuery } from "../../services/dataService";
-import {errorHandler} from "../../devtools/validationHandlers";
+import {useGetDoctorQuery, useSetAppointmentMutation} from "../../services/dataService";
+import {errorHandler, submissionHandler} from "../../devtools/validationHandlers";
 import {Notifications} from "react-push-notification";
 
 export default function DoctorProfile() {
@@ -22,6 +22,8 @@ export default function DoctorProfile() {
     const [date, setDate] = useState<string>('')
     const [time, setTime] = useState<string>('')
     const [type, setType] = useState<boolean>(false)
+    const [appointmentId, setAppointmentId] = useState<string>('')
+    const [setAppointment, { isLoading, isError, error }] = useSetAppointmentMutation();
 
     const ACCESS_TOKEN = localStorage.getItem("access_token");
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
@@ -38,9 +40,6 @@ export default function DoctorProfile() {
         if (ACCESS_TOKEN != null) {
             const DECODED_ACCESS_TOKEN : decoded_token = jwtDecode(ACCESS_TOKEN as string)
             const DECODED_REFRESH_TOKEN : decoded_token = jwtDecode(REFRESH_TOKEN as string)
-
-            console.log(DECODED_ACCESS_TOKEN)
-            console.log(DECODED_REFRESH_TOKEN)
 
             if (DECODED_ACCESS_TOKEN.exp * 1000 < currentData.getTime()) {
                 setType(false)
@@ -62,9 +61,24 @@ export default function DoctorProfile() {
         }
     }, [result])
 
-    const handleRecord = () => {
+    const handleRecord = async ( appointment_id : string ) => {
         if (date == '') errorHandler('Выберите дату')
         if (time == '') errorHandler("Выберите время")
+        try {
+            const result = await setAppointment({
+                token : ACCESS_TOKEN as string,
+                id : appointment_id
+            })
+            if (isError) {
+                console.log(error)
+            }
+            submissionHandler("Вы успешно записались")
+            setTimeout(function() {
+                window.location.reload()
+            }, 1500)
+        } catch (error) {
+            errorHandler(error as string)
+        }
     }
 
     if (doctor.isSuccess) {
@@ -85,6 +99,11 @@ export default function DoctorProfile() {
                     <div className={'doctor--container--content'}>
                         <div className={'doctor--container--content__left'}>
                             <img className={'doctor--container--content__left--image'} src={`http://localhost/lumen/photo/${doctor.data.photo}`} alt=""/>
+                            <div
+                                className={'doctor--container--content__left--price'}
+                            >
+                                Цена за приём {doctor.data.price}
+                            </div>
                             <button
                                 type={'button'}
                                 className={'doctor--container--content__left--button'}
@@ -162,7 +181,9 @@ export default function DoctorProfile() {
                                                 ? <>{
                                                     value.appointments.map((value) =>
                                                         <div className={'modal--container--content__times--time'}
-                                                             onClick={() => { setTime(value.date.substring(11, 16)) }}
+                                                             onClick={() => { setTime(value.date.substring(11, 16));
+                                                                 setAppointmentId(String(value.id))
+                                                             }}
                                                         >
                                                             <p className={'modal--container--content__times--time__text'}>
                                                                 {value.date.substring(11, 16)}
@@ -178,7 +199,7 @@ export default function DoctorProfile() {
                                 <div className={'modal--container--content__line'}/>
                                 <button type={'button'}
                                         className={'modal--container--content__button'}
-                                        onClick={handleRecord}
+                                        onClick={() => handleRecord(appointmentId)}
                                 >
                                     Записаться на <span>{date.substring(5)}</span> - <span>{time}</span>
                                 </button>

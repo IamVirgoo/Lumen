@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
-import {IUserDoctorDataRequest, IUserDoctorShortDataRequest} from "../models/IUserDoctor";
+import { IUserDoctorDataRequest, IUserDoctorShortDataRequest } from "../models/IUserDoctor";
 
 export const DataService = createApi({
     reducerPath : "data-service",
@@ -40,13 +40,26 @@ export const DataService = createApi({
                 method : "GET",
                 redirect : "follow"
             })
+        }),
+        getAppointment : build.query<any, { token : string, id : number }>({
+            query : ( arg ) => ({
+                url : `/patient/appointment/${arg.id}`,
+                headers : {
+                    "Authorization": "Bearer " + arg.token
+                },
+                method : "GET",
+                redirect : "follow"
+            })
         })
     })
 })
+
+/*TODO: optionally create the models for Appointment/s*/
 
 export const {
     useGetDoctorsQuery,
     useGetDoctorQuery,
     useSetAppointmentMutation,
     useGetAppointmentsQuery,
+    useGetAppointmentQuery,
 } = DataService

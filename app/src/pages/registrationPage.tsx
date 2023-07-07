@@ -95,7 +95,7 @@ export default function RegistrationPage() {
                 name: name,
                 surname: surname,
                 patronymic: patronymic,
-                phone_number: Number(telephoneNumber),
+                phone_number: telephoneNumber,
                 password: password,
             }).then((result : any) => {
                 console.log(result)
