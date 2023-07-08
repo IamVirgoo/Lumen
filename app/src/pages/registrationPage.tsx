@@ -45,7 +45,7 @@ export default function RegistrationPage() {
 
             DECODED_ACCESS_TOKEN.exp * 1000 < currentDate.getTime()
                 ? console.log("Token expired")
-                : navigator('/application')
+                : navigator('/sign-in')
         }
     }, [])
 

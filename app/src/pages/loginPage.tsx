@@ -3,11 +3,12 @@ import jwtDecode from "jwt-decode";
 import { Notifications } from "react-push-notification";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useSignInMutation } from "../services/authService";
+import { useGetUserQuery, useSignInMutation } from "../services/authService";
 import { useAppDispatch } from "../hooks/redux";
 import { logIn } from "../store/reducers/UserPatientSlice";
 import { decoded_token } from "../models/IToken";
-import {errorHandler} from "../devtools/validationHandlers";
+import { errorHandler } from "../devtools/validationHandlers";
+import { doctor_logIn } from "../store/reducers/UserDoctorSlice";
 
 export default function LoginPage() {
     const dispatch = useAppDispatch()
@@ -16,10 +17,11 @@ export default function LoginPage() {
     const [telephoneNumber, setTelephoneNumber] = useState<string>("")
     const [password, setPassword] = useState<string>("")
 
-    const [loginUser, {isLoading, isError, error, isSuccess}] = useSignInMutation();
-
     const ACCESS_TOKEN = localStorage.getItem("access_token");
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
+
+    const [loginUser,
+        {isLoading, isError, error, isSuccess}] = useSignInMutation();
 
     const currentDate = new Date()
 
@@ -33,7 +35,8 @@ export default function LoginPage() {
 
             DECODED_ACCESS_TOKEN.exp * 1000 < currentDate.getTime()
                 ? console.log("Token expired")
-                : navigator('/application')
+                : navigator("/application")
+
         }
     }, [])
 
@@ -43,15 +46,28 @@ export default function LoginPage() {
             password: password
         })
         try {
-            dispatch(logIn({
-                name : result.data.name,
-                surname : result.data.surname,
-                patronymic : result.data.patronymic,
-                phone_number : result.data.phone_number,
-                authenticate : true,
-                access_token : result.data.access_token.token,
-                refresh_token : result.data.refresh_token.token
-            }))
+            if (result.data.role == 'user') {
+                dispatch(logIn({
+                    name : result.data.name,
+                    surname : result.data.surname,
+                    patronymic : result.data.patronymic,
+                    phone_number : result.data.phone_number,
+                    authenticate : true,
+                    access_token : result.data.access_token.token,
+                    refresh_token : result.data.refresh_token.token
+                }))
+            }
+            if (result.data.role == 'doctor') {
+                dispatch(doctor_logIn({
+                    name : result.data.name,
+                    surname : result.data.surname,
+                    patronymic : result.data.patronymic,
+                    phone_number : result.data.phone_number,
+                    authenticate : true,
+                    access_token : result.data.access_token.token,
+                    refresh_token : result.data.refresh_token.token
+                }))
+            }
             localStorage.setItem("authenticate", "true")
             localStorage.setItem("access_token", result.data.access_token.token)
             localStorage.setItem("refresh_token", result.data.refresh_token.token)

@@ -37,14 +37,27 @@
     padding: 50px 20px 0 20px
     &--content
       padding-top: 50px
-      cursor: grab
+      &__line
+        @include line
+        margin: 20px 0
+      &__warning
+        width: 270px
+        font-size: 18px
+        letter-spacing: .2em
+        padding: 10px
+        margin: 20px 0
+        color: $secondary_black_color
+        background-color: $secondary_white_color
+        border-radius: 5px
+
       &--title
         font-size: 32px
         letter-spacing: .4em
         color: $primary_white_color
-        padding-bottom: 20px
       &--current-records
         display: flex
         align-items: flex-start
         justify-content: space-between
-
+      &--swiper
+        cursor: grab
+        margin: 20px 0

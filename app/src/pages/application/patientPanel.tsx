@@ -1,36 +1,30 @@
+import Modal from "react-modal";
 import AppHeader from "../../components/admin/header";
 import RecordCard from "../../components/admin/user-patient/recordCard";
-import Modal from "react-modal";
 
-import { Swiper, SwiperSlide } from 'swiper/react';
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { RootState } from "../../store/store";
-import { useEffect, useState } from "react";
 import { useGetUserQuery } from "../../services/authService";
+import { useEffect, useState } from "react";
 import { logIn } from "../../store/reducers/UserPatientSlice";
-import { Link, useNavigate } from "react-router-dom";
-import {
-    useGetAppointmentQuery,
-    useGetAppointmentsQuery,
-    useGetDoctorQuery,
-} from "../../services/dataService";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Link, useNavigate} from "react-router-dom";
+import { RootState } from "../../store/store";
+import { useGetAppointmentQuery, useGetAppointmentsQuery, useGetDoctorQuery } from "../../services/dataService";
 
-import 'swiper/css';
-
-export default function ApplicationIndexPage() {
-    const get_user =
-        useGetUserQuery(localStorage.getItem("access_token") as string)
-
-    const navigator = useNavigate()
+export default function PatientPanel() {
     const dispatch = useAppDispatch()
+    const navigator = useNavigate()
 
     let subtitle;
+
     const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
     const [recordId, setRecordId] = useState<number>()
-
     const [doctorId, setDoctorId] = useState<string>()
 
     const USER = useAppSelector((state : RootState) => state.userPatient)
+
+    const GET_USER =
+        useGetUserQuery(localStorage.getItem("access_token") as string)
     const appointments =
         useGetAppointmentsQuery(localStorage.getItem("access_token") as string)
     const doctor =
@@ -41,6 +35,21 @@ export default function ApplicationIndexPage() {
             id : Number(recordId)
         })
 
+    useEffect(() => {
+        if (GET_USER.isSuccess) {
+            dispatch(logIn({
+                name : GET_USER.data.name,
+                surname : GET_USER.data.surname,
+                patronymic : GET_USER.data.patronymic,
+                phone_number : GET_USER.data.phone_number,
+                authenticate : true,
+                access_token : localStorage.getItem("access_token") as string,
+                refresh_token : localStorage.getItem("refresh_token") as string
+            }))
+            console.log(GET_USER)
+        }
+    }, [GET_USER])
+
     const openModal = (record_Id : number, doctor_Id : string) => {
         setDoctorId(doctor_Id)
         setRecordId(record_Id)
@@ -50,21 +59,6 @@ export default function ApplicationIndexPage() {
         setModalIsOpen(true)
     }
     const closeModal = () => setModalIsOpen(false)
-
-    useEffect(() => {
-        if (get_user.isSuccess) {
-            dispatch(logIn({
-                name : get_user.data.name,
-                surname : get_user.data.surname,
-                patronymic : get_user.data.patronymic,
-                phone_number : get_user.data.phone_number,
-                authenticate : true,
-                access_token : localStorage.getItem("access_token") as string,
-                refresh_token : localStorage.getItem("refresh_token") as string
-            }))
-        }
-        if (get_user.isError) navigator('/sign-in')
-    }, [get_user])
 
     return <>
         { localStorage.getItem("authenticate") == "true"

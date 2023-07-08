@@ -4,9 +4,9 @@ import IndexPage from "./pages/indexPage";
 import AppOutlet from "./layout/AppOutlet";
 import LoginPage from "./pages/loginPage";
 import RegistrationPage from "./pages/registrationPage";
-import ApplicationIndexPage from "./pages/application/applicationIndexPage";
 import DoctorProfile from "./pages/profiles/doctorProfile";
 import PatientProfile from "./pages/profiles/patientProfile";
+import ApplicationPage from "./pages/application/applicationPage";
 
 export const Router = createBrowserRouter([
     {
@@ -36,8 +36,18 @@ export const Router = createBrowserRouter([
         children : [
             {
                 index : true,
-                element : <ApplicationIndexPage/>
+                element : <ApplicationPage/>
             }
         ]
     }
 ])
+
+/*
+* +79737337274
+* 5898
+* */
+
+/*
+* +79009859434
+* 5898
+* */

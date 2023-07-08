@@ -29,7 +29,7 @@ export const AuthService = createApi({
                 body: JSON.stringify(auth)
             })
         }),
-        getUser : build.query<IUserPatient, string>({
+        getUser : build.query<any, string>({
             query : ( arg ) => ({
                 url : "/user",
                 headers : {

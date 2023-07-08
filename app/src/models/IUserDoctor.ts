@@ -1,5 +1,11 @@
 export interface IUserDoctor {
-
+    name : string;
+    surname : string;
+    patronymic : string;
+    phone_number : string;
+    authenticate : boolean;
+    access_token : string;
+    refresh_token : string
 }
 
 interface Appointment {

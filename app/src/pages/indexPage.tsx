@@ -6,6 +6,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper";
 import { useGetDoctorsQuery } from "../services/dataService";
 
+import 'swiper/css';
+
 export default function IndexPage() {
     const doctors = useGetDoctorsQuery('')
 
