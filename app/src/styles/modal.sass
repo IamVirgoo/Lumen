@@ -44,6 +44,33 @@
       align-items: flex-start
       padding: 5px 0
       gap: 10px
+      &--anamnesis
+        display: flex
+        flex-direction: column
+        align-items: flex-start
+        gap: 10px
+        &__line
+          @include line
+        &--title
+          font-size: 24px
+          letter-spacing: .2em
+          margin-right: -.2em
+          color: $primary_white_color
+        &--input-wrapper
+          display: flex
+          align-items: center
+          gap: 5px
+          &--input
+            @include formInput
+            width: 450px
+          &--submit
+            @include formButton
+            width: 160px
+            &::placeholder
+              letter-spacing: .2em !important
+            &:hover
+              background-color: $secondary_white_color
+              color: $secondary_black_color
       &--card-text
         font-size: 24px
         letter-spacing: .2em

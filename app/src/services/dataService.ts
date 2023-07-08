@@ -31,6 +31,17 @@ export const DataService = createApi({
                 redirect : "follow"
             })
         }),
+        setDoctorAnamnesis : build.mutation<any, { token : string, id : number, text : { anamnesis : string }}>({
+            query : ( arg ) => ({
+                url : `doctor/appointment/${arg.id}/anamnesis`,
+                headers : {
+                    "Authorization": "Bearer " + arg.token
+                },
+                method : "POST",
+                redirect : "follow",
+                body : arg.text
+            })
+        }),
         getAppointments : build.query<any, string>({
             query : ( token ) => ({
                 url : '/patient/appointments',
@@ -44,6 +55,16 @@ export const DataService = createApi({
         getAppointment : build.query<any, { token : string, id : number }>({
             query : ( arg ) => ({
                 url : `/patient/appointment/${arg.id}`,
+                headers : {
+                    "Authorization": "Bearer " + arg.token
+                },
+                method : "GET",
+                redirect : "follow"
+            })
+        }),
+        getDoctorAppointment : build.query<any, { token : string, id : number }>({
+            query : ( arg ) => ({
+                url : `/doctor/appointment/${arg.id}`,
                 headers : {
                     "Authorization": "Bearer " + arg.token
                 },
@@ -82,6 +103,8 @@ export const {
     useSetAppointmentMutation,
     useGetAppointmentsQuery,
     useGetAppointmentQuery,
+    useGetDoctorAppointmentQuery,
     useGetDoctorTodayAppointmentsQuery,
-    useGetDoctorAllAppointmentsQuery
+    useGetDoctorAllAppointmentsQuery,
+    useSetDoctorAnamnesisMutation
 } = DataService

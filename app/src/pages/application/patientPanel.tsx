@@ -13,7 +13,6 @@ import { useGetAppointmentQuery, useGetAppointmentsQuery, useGetDoctorQuery } fr
 
 export default function PatientPanel() {
     const dispatch = useAppDispatch()
-    const navigator = useNavigate()
 
     let subtitle;
 
@@ -77,9 +76,10 @@ export default function PatientPanel() {
                                         type={value.check as boolean}
                                         title={value.info}
                                         data={value.date.substring(0, 10)}
-                                        doctor={value.fio.split(" ", 2)[0] + " " + value.fio.split(" ", 2)[1]}
+                                        doctor={value.fio}
                                         time={value.date.substring(11, 16)}
                                         click={() => openModal(value.id, String(value.doctor_id))}
+                                        profile={'user'}
                                     /></SwiperSlide>
                                 )}</>
                                 : <>{ appointments.isLoading

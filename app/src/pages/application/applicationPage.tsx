@@ -2,8 +2,11 @@ import DoctorPanel from "./doctorPanel";
 import PatientPanel from "./patientPanel";
 
 import { useGetUserQuery } from "../../services/authService";
+import {useNavigate} from "react-router-dom";
 
 export default function ApplicationPage() {
+    const navigator = useNavigate()
+
     const GET_USER =
         useGetUserQuery(localStorage.getItem("access_token") as string)
 
@@ -19,6 +22,9 @@ export default function ApplicationPage() {
                 <h2>Загрузка</h2>
             </div>
         </main>
+    }
+    if (GET_USER.isError) {
+        navigator('/sign-in')
     }
     return <main className={'app-main'}>
         <div className={'app-main--container'}>
