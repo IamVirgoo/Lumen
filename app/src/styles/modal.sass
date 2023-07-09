@@ -38,6 +38,19 @@
       &__line
         margin-top: 10px
         @include line
+    &--form
+      display: flex
+      flex-direction: column
+      align-items: center
+      gap: 10px
+      margin-top: 5px
+      &__input
+        @include formInput
+      &__button
+        @include formButton
+        &:hover
+          background-color: $secondary_white_color
+          color: $secondary_black_color
     &--content
       display: flex
       flex-direction: column

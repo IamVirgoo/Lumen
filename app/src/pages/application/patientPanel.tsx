@@ -1,5 +1,6 @@
 import Modal from "react-modal";
 import AppHeader from "../../components/admin/header";
+import HealthCard from "../../components/admin/user-patient/healthCard";
 import RecordCard from "../../components/admin/user-patient/recordCard";
 
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
@@ -7,7 +8,7 @@ import { useGetUserQuery } from "../../services/authService";
 import { useEffect, useState } from "react";
 import { logIn } from "../../store/reducers/UserPatientSlice";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Link, useNavigate} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { RootState } from "../../store/store";
 import { useGetAppointmentQuery, useGetAppointmentsQuery, useGetDoctorQuery } from "../../services/dataService";
 
@@ -17,6 +18,7 @@ export default function PatientPanel() {
     let subtitle;
 
     const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
+    const [modalFormIsOpen, setModalFormIsOpen] = useState<boolean>(false)
     const [recordId, setRecordId] = useState<number>()
     const [doctorId, setDoctorId] = useState<string>()
 
@@ -59,6 +61,13 @@ export default function PatientPanel() {
     }
     const closeModal = () => setModalIsOpen(false)
 
+    const openModalForm = () => {
+        setModalFormIsOpen(true)
+    }
+    const closeModalForm = () => {
+        setModalFormIsOpen(false)
+    }
+
     return <>
         { localStorage.getItem("authenticate") == "true"
             ?  <main className={'app-main'}>
@@ -66,28 +75,61 @@ export default function PatientPanel() {
                 <div className={'app-main--container'}>
                     <div className={'app-main--container--content'}>
                         <p className={'app-main--container--content--title'}>Мои записи</p>
-                        <Swiper
-                            spaceBetween={0}
-                            slidesPerView={4}
-                        >
-                            { appointments.isSuccess
-                                ? <>{appointments.data.map((value : any) =>
-                                    <SwiperSlide><RecordCard
-                                        type={value.check as boolean}
-                                        title={value.info}
-                                        data={value.date.substring(0, 10)}
-                                        doctor={value.fio}
-                                        time={value.date.substring(11, 16)}
-                                        click={() => openModal(value.id, String(value.doctor_id))}
-                                        profile={'user'}
-                                    /></SwiperSlide>
-                                )}</>
-                                : <>{ appointments.isLoading
-                                    ? <>Загрузка...</>
-                                    : <>Записей нету</>
-                                }</>
-                            }
-                        </Swiper>
+                        <div className={'app-main--container--content--swiper'}>
+                            <Swiper
+                                spaceBetween={0}
+                                slidesPerView={4}
+                            >
+                                { appointments.isSuccess
+                                    ? <>{appointments.data.map((value : any) =>
+                                        <SwiperSlide><RecordCard
+                                            type={value.check as boolean}
+                                            title={value.info}
+                                            data={value.date.substring(0, 10)}
+                                            doctor={value.fio}
+                                            time={value.date.substring(11, 16)}
+                                            click={() => openModal(value.id, String(value.doctor_id))}
+                                            profile={'user'}
+                                        /></SwiperSlide>
+                                    )}</>
+                                    : <>{ appointments.isLoading
+                                        ? <>Загрузка...</>
+                                        : <>Записей нету</>
+                                    }</>
+                                }
+                            </Swiper>
+                        </div>
+                        <div className={'app-main--container--content__line'}/>
+                        <div className={'app-main--container--content--title-wrapper'}>
+                            <p className={'app-main--container--content--title-wrapper__text'}>Моё здоровье</p>
+                            <input className={'app-main--container--content--title-wrapper__button'}
+                                   type="button"
+                                   value={'Записать показания'}
+                                   onClick={openModalForm}
+                            />
+                        </div>
+                        <div className={'app-main--container--content--health'}>
+                            <HealthCard
+                                type={"Пульс"}
+                                value={"120 ударов/мин"}
+                                state={"Хорошее"}
+                            />
+                            <HealthCard
+                                type={"Давление"}
+                                value={"130/80"}
+                                state={"Хорошее"}
+                            />
+                            <HealthCard
+                                type={"Температура"}
+                                value={"38.3°"}
+                                state={"Плохое"}
+                            />
+                            <HealthCard
+                                type={"Сатурация"}
+                                value={"97%"}
+                                state={"Отличное"}
+                            />
+                        </div>
                     </div>
                 </div>
                 <Modal
@@ -135,6 +177,59 @@ export default function PatientPanel() {
                             }</>
                         }
 
+                    </div>
+                </Modal>
+                <Modal
+                    isOpen={modalFormIsOpen}
+                    onRequestClose={closeModalForm}
+                    style={{
+                        content: {
+                            top: '50%',
+                            left: '50%',
+                            right: 'auto',
+                            bottom: 'auto',
+                            marginRight: '-50%',
+                            transform: 'translate(-50%, -50%)',
+                            borderRadius: '5px',
+                            backgroundColor: '#407468',
+                            border: '1px solid #FFFF',
+                            zIndex: 9999
+                        }
+                    }}
+                    contentLabel="Example Modal"
+                    overlayClassName='modal--overlay'
+                >
+                    <div className={'modal'}>
+                        <div className={'modal--container'}>
+                            <div className={'modal--container--title-wrapper'}>
+                                <h1 className={'modal--container--title-wrapper__text'}
+                                    ref={(_subtitle) => (subtitle = _subtitle)}
+                                >Обновите или Измените ваши показания</h1>
+                                <div className={'modal--container--title-wrapper__line'}/>
+                            </div>
+                            <form className={'modal--container--form'}>
+                                <input className={'modal--container--form__input'}
+                                       type="text"
+                                       placeholder={"Пульс уд/м"}
+                                />
+                                <input className={'modal--container--form__input'}
+                                       type="text"
+                                       placeholder={"Давление"}
+                                />
+                                <input className={'modal--container--form__input'}
+                                       type="text"
+                                       placeholder={"Температура °"}
+                                />
+                                <input className={'modal--container--form__input'}
+                                       type="text"
+                                       placeholder={"Сатурация %"}
+                                />
+                                <input className={'modal--container--form__button'}
+                                       type="button"
+                                       value={"Сохранить"}
+                                />
+                            </form>
+                        </div>
                     </div>
                 </Modal>
             </main>

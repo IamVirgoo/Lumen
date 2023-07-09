@@ -52,7 +52,7 @@
   cursor: pointer
   @media screen and (width <= 1440px)
     width: 250px
-    height: 230px
+    height: 250px
   &:hover
     box-shadow: 0 0 15px 0 rgba($primary_white_color, .5)
   &--content
@@ -85,3 +85,21 @@
       &--text
         font-size: 18px
         letter-spacing: .2em
+.health-card
+  display: flex
+  align-items: flex-start
+  width: 200px
+  border-radius: 5px
+  background-color: $secondary_white_color
+  padding: 10px
+  &--content
+    display: flex
+    flex-direction: column
+    align-items: flex-start
+    gap: 15px
+    &--title
+      font-size: 18px
+      letter-spacing: .2em
+    &__line
+      @include line
+      background-color: $primary_green_color !important
