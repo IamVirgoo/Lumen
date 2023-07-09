@@ -91,11 +91,40 @@ export const DataService = createApi({
                 method : "GET",
                 redirect : "follow"
             })
+        }),
+        getHealth : build.query<any, { user_id : number, date : string }>({
+            query : ( arg ) => ({
+                url : `/patient/health?user_id=${arg.user_id}&date=${arg.date}`,
+                headers : {
+                    "Content-Type": "application/json"
+                },
+                method : "GET",
+                redirect : "follow"
+            })
+        }),
+        setHealth : build.mutation<any, { token : string, obj : any }>({
+            query : ( arg ) => ({
+                url : '/patient/health',
+                headers : {
+                    "Authorization": "Bearer " + arg.token
+                },
+                method : "POST",
+                redirect : "follow",
+                body : {
+                    "pressure": arg.obj.pressure,
+                    "temperature": arg.obj.temperature,
+                    "pulse": arg.obj.pulse,
+                    "saturation": arg.obj.saturation,
+                    "sugar": arg.obj.sugar,
+                    "state": arg.obj.state,
+                    "complaints": "string"
+                }
+            })
         })
     })
 })
 
-/*TODO: optionally create the models for Appointment/s*/
+/*TODO: optionally create the models for Appointment/s and Health*/
 
 export const {
     useGetDoctorsQuery,
@@ -106,5 +135,7 @@ export const {
     useGetDoctorAppointmentQuery,
     useGetDoctorTodayAppointmentsQuery,
     useGetDoctorAllAppointmentsQuery,
-    useSetDoctorAnamnesisMutation
+    useSetDoctorAnamnesisMutation,
+    useGetHealthQuery,
+    useSetHealthMutation
 } = DataService

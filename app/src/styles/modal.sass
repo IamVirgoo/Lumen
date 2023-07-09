@@ -46,17 +46,54 @@
       margin-top: 5px
       &__input
         @include formInput
+        &__choose
+          @include formInput
+          width: 380px
       &__button
         @include formButton
         &:hover
           background-color: $secondary_white_color
           color: $secondary_black_color
+      &__choose
+        display: flex
+        flex-direction: column
+        gap: 10px
+        &--title
+          text-align: center
+          font-size: 24px
+          letter-spacing: .2em
+          color: $secondary_white_color
+        &--content
+          display: flex
+          align-items: center
+          gap: 10px
+          &__option
+            cursor: pointer
+            font-size: 18px
+            letter-spacing: .2em
+            color: $secondary_white_color
+            padding: 5px
+            border: 1px solid $secondary_white_color
+            border-radius: 5px
+            transition: 200ms ease-in
+            &:hover
+              background-color: $secondary_black_color
+              color: $secondary_white_color
     &--content
       display: flex
       flex-direction: column
       align-items: flex-start
       padding: 5px 0
       gap: 10px
+      &--patient-health
+        display: flex
+        flex-direction: column
+        align-items: flex-start
+        &--title
+          font-size: 24px
+          letter-spacing: .2em
+          margin-right: -.2em
+          color: $primary_white_color
       &--anamnesis
         display: flex
         flex-direction: column

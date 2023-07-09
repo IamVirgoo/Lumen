@@ -7,24 +7,30 @@ import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { doctor_logIn } from "../../store/reducers/UserDoctorSlice";
 import { RootState } from "../../store/store";
-import { submissionHandler } from "../../devtools/validationHandlers";
+import {metricValidation, parameterValidation, submissionHandler} from "../../devtools/validationHandlers";
 import { Notifications } from "react-push-notification";
 import { Swiper, SwiperSlide } from "swiper/react";
 import {
     useGetDoctorAllAppointmentsQuery,
     useGetDoctorAppointmentQuery,
-    useGetDoctorTodayAppointmentsQuery,
+    useGetDoctorTodayAppointmentsQuery, useGetHealthQuery,
     useSetDoctorAnamnesisMutation
 } from "../../services/dataService";
+import HealthCard from "../../components/admin/user-patient/healthCard";
+import {updateHealth} from "../../store/reducers/UserHealthSlice";
 
 export default function DoctorPanel() {
     const dispatch = useAppDispatch()
 
     let subtitle;
+    let currentData = new Date().toISOString().substring(0, 10)
+
+    const HEALTH = useAppSelector((state) => state.userHealth)
 
     const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
     const [recordId, setRecordId] = useState<number>()
     const [anamnesisText, setAnamnesisText] = useState<string>('')
+    const [userId, setUserId] = useState<number>()
 
     const USER = useAppSelector((state : RootState) => state.userDoctor)
 
@@ -42,6 +48,41 @@ export default function DoctorPanel() {
             token : localStorage.getItem("access_token") as string,
             id : Number(recordId)
         })
+
+    const GET_HEALTH = useGetHealthQuery({
+        user_id : Number(userId),
+        date : currentData
+    })
+
+    useEffect(() => {
+        if (GET_APPOINTMENT.isSuccess) {
+            setUserId(GET_APPOINTMENT.data.user_id)
+        }
+        if (GET_APPOINTMENT.isLoading) {
+            console.log("Загрузка")
+        }
+    }, [GET_APPOINTMENT])
+
+    useEffect(() => {
+        if (GET_HEALTH.isSuccess) {
+            if (GET_HEALTH.data.length != 0) {
+                dispatch(updateHealth({
+                    pressure : GET_HEALTH.data[GET_HEALTH.data.length - 1].pressure,
+                    temperature : GET_HEALTH.data[GET_HEALTH.data.length - 1].temperature,
+                    pulse : GET_HEALTH.data[GET_HEALTH.data.length - 1].pulse,
+                    saturation : GET_HEALTH.data[GET_HEALTH.data.length - 1].saturation,
+                    sugar : GET_HEALTH.data[GET_HEALTH.data.length - 1].sugar,
+                    state : GET_HEALTH.data[GET_HEALTH.data.length - 1].state
+                }))
+            }
+        }
+        if (GET_HEALTH.isLoading) {
+            console.log("загрузка")
+        }
+        if (GET_HEALTH.isError) {
+            console.log(GET_HEALTH.error)
+        }
+    }, [GET_HEALTH])
 
     console.log(GET_TODAY_APPOINTMENTS)
     console.log(GET_ALL_APPOINTMENTS)
@@ -83,7 +124,6 @@ export default function DoctorPanel() {
 
     const openModal = (record_Id : number) => {
         setRecordId(record_Id)
-        console.log("added", record_Id)
         setModalIsOpen(true)
     }
     const closeModal = () => setModalIsOpen(false)
@@ -204,6 +244,66 @@ export default function DoctorPanel() {
                                     </form>
                                 </div>
                                 : <p className={'modal--container--content--card-text'}>Итоговый отчёт врача: <span>{GET_APPOINTMENT.data.anamnesis as string}</span></p>
+                            }
+                            <div className={'modal--container--content__line'}/>
+                            <div className={'modal--container--content--patient-health'}>
+                                <p className={'modal--container--content--patient-health--title'}>Актуальные показатели больного</p>
+                                <div className={'app-main--container--content--health'}>
+                                    { GET_HEALTH.isSuccess
+                                        ? <>{ GET_HEALTH.data.length == 0
+                                            ? <p className={'app-main--container--content--health__warning'}>Данных нет</p>
+                                            : <>
+                                                <HealthCard
+                                                    type={"Пульс в покое"}
+                                                    value={String(HEALTH.pulse)}
+                                                    state={parameterValidation("Пульс", HEALTH.pulse) as string}
+                                                    metric={metricValidation("Пульс")}
+                                                />
+                                                <HealthCard
+                                                    type={"Давление"}
+                                                    value={HEALTH.pressure}
+                                                    state={parameterValidation("Давление",
+                                                        Number(HEALTH.pressure.substring(0, 3))) as string}
+                                                    metric={metricValidation("Давление")}
+                                                />
+                                                <HealthCard
+                                                    type={"Температура"}
+                                                    value={String(HEALTH.temperature)}
+                                                    state={parameterValidation("Температура",
+                                                        HEALTH.temperature) as string}
+                                                    metric={metricValidation("Температура")}
+                                                />
+                                                <HealthCard
+                                                    type={"Сатурация"}
+                                                    value={String(HEALTH.saturation)}
+                                                    state={parameterValidation("Сатурация",
+                                                        HEALTH.saturation) as string}
+                                                    metric={metricValidation("Сатурация")}
+                                                />
+                                                <HealthCard
+                                                    type={"Сахар"}
+                                                    value={String(HEALTH.sugar)}
+                                                    state={parameterValidation("Сахар", HEALTH.sugar) as string}
+                                                    metric={metricValidation("Сахар")}
+                                                />
+                                            </>
+                                        }</>
+                                        : <>{ GET_HEALTH.isLoading
+                                            ? <>Загрузка</>
+                                            : <>Ошибочка</>
+                                        }</>
+                                    }
+                                </div>
+                            </div>
+                            { GET_HEALTH.isSuccess
+                                ? <>
+                                    <div className={'modal--container--content__line'}/>
+                                    <p className={'modal--container--content--card-text'}>Комментарий больного о самочувствии: <span>{HEALTH.state}</span></p>
+                                </>
+                                : <>{ GET_HEALTH.isLoading
+                                    ? <></>
+                                    : <></>
+                                }</>
                             }
                         </div>
                     </div>

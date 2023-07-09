@@ -1,5 +1,6 @@
 import IUserPatientSliceReducer from "./reducers/UserPatientSlice"
 import IUSerDoctorSliceReducer from "./reducers/UserDoctorSlice"
+import IUserHealthSliceReducer from "./reducers/UserHealthSlice"
 
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { AuthService } from "../services/authService";
@@ -9,7 +10,8 @@ const rootReducer = combineReducers({
     [AuthService.reducerPath]: AuthService.reducer,
     userPatient: IUserPatientSliceReducer,
     [DataService.reducerPath]: DataService.reducer,
-    userDoctor: IUSerDoctorSliceReducer
+    userDoctor: IUSerDoctorSliceReducer,
+    userHealth: IUserHealthSliceReducer
 });
 
 export const setupStore = () => configureStore({

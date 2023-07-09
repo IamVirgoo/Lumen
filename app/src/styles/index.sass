@@ -37,6 +37,41 @@
     padding: 50px 20px 0 20px
     &--content
       padding-top: 50px
+      &--title-wrapper
+        display: flex
+        justify-content: space-between
+        align-items: center
+        &__button
+          @include formButton
+          width: auto !important
+          padding: 15px 5px 15px 10px !important
+          &:hover
+            background-color: $primary_white_color
+            color: $secondary_black_color
+        &--title
+          display: flex
+          align-items: center
+          gap: 10px
+          &__text
+            font-size: 32px
+            letter-spacing: .4em
+            color: $primary_white_color
+          &__act
+            font-size: 18px
+            letter-spacing: .2em
+            color: $secondary_white_color
+            padding: 5px
+            border: 1px solid $secondary_white_color
+            border-radius: 5px
+            cursor: pointer
+            transition: 200ms ease-in
+            &:hover
+              background-color: $secondary_black_color
+              color: $secondary_white_color
+            &::-ms-value
+              color: $secondary_black_color
+            &::placeholder
+              color: $secondary_black_color
       &__line
         @include line
         margin: 20px 0
@@ -60,23 +95,18 @@
       &--swiper
         cursor: grab
         margin: 20px 0
-      &--title-wrapper
-        display: flex
-        justify-content: space-between
-        align-items: center
-        &__text
-          font-size: 32px
-          letter-spacing: .4em
-          color: $primary_white_color
-        &__button
-          @include formButton
-          width: auto !important
-          padding: 15px 5px 15px 10px !important
-          &:hover
-            background-color: $primary_white_color
-            color: $secondary_black_color
       &--health
         display: flex
         align-items: center
         gap: 20px
         margin: 20px 0
+        &__warning
+          width: 130px
+          font-size: 18px
+          letter-spacing: .2em
+          padding: 10px
+          margin: 20px 0
+          text-align: center
+          color: $secondary_black_color
+          background-color: $secondary_white_color
+          border-radius: 5px

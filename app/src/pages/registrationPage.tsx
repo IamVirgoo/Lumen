@@ -88,7 +88,7 @@ export default function RegistrationPage() {
 
     const handleSubmit = async () => {
         if (!confirmStatus) { errorHandler("Пожалуйста подтвердите телефон"); return; }
-        if (!name || !surname || !patronymic || !password || !confirmPassword) { errorHandler("ожалуйста заполните все поля"); return; }
+        if (!name || !surname || !patronymic || !password || !confirmPassword) { errorHandler("Пожалуйста заполните все поля"); return; }
         if (!confirmPasswordValidation(confirmPassword)) { errorHandler("Пароли не совпадают"); return; }
         try {
             await registrationUser({
