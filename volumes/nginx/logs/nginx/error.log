@@ -16852,3 +16852,29 @@
 2023/07/10 10:02:33 [error] 21#21: *2 connect() failed (111: Connection refused) while connecting to upstream, client: 172.22.0.1, server: localhost, request: "GET /lumen/doctors HTTP/1.1", upstream: "http://172.22.0.3:8000/doctors", host: "localhost", referrer: "http://localhost/"
 2023/07/10 10:02:34 [error] 20#20: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 172.22.0.1, server: localhost, request: "GET /lumen/user HTTP/1.1", upstream: "http://172.22.0.3:8000/user", host: "localhost", referrer: "http://localhost/"
 2023/07/10 10:02:34 [error] 22#22: *5 connect() failed (111: Connection refused) while connecting to upstream, client: 172.22.0.1, server: localhost, request: "GET /lumen/doctors HTTP/1.1", upstream: "http://172.22.0.3:8000/doctors", host: "localhost", referrer: "http://localhost/"
+2023/07/10 21:12:42 [notice] 1#1: using the "epoll" event method
+2023/07/10 21:12:42 [notice] 1#1: nginx/1.25.0
+2023/07/10 21:12:42 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2023/07/10 21:12:42 [notice] 1#1: OS: Linux 5.15.49-linuxkit
+2023/07/10 21:12:42 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/07/10 21:12:42 [notice] 1#1: start worker processes
+2023/07/10 21:12:42 [notice] 1#1: start worker process 20
+2023/07/10 21:12:42 [notice] 1#1: start worker process 21
+2023/07/10 21:12:42 [notice] 1#1: start worker process 22
+2023/07/10 21:12:42 [notice] 1#1: start worker process 23
+2023/07/10 21:12:42 [notice] 1#1: start worker process 24
+2023/07/10 21:12:42 [notice] 1#1: start worker process 25
+2023/07/10 21:16:08 [emerg] 1#1: host not found in upstream "lumen" in /etc/nginx/conf.d/nginx.conf:12
+2023/07/10 21:16:19 [emerg] 1#1: host not found in upstream "lumen" in /etc/nginx/conf.d/nginx.conf:12
+2023/07/10 21:16:49 [notice] 1#1: using the "epoll" event method
+2023/07/10 21:16:49 [notice] 1#1: nginx/1.25.0
+2023/07/10 21:16:49 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6) 
+2023/07/10 21:16:49 [notice] 1#1: OS: Linux 5.15.49-linuxkit
+2023/07/10 21:16:49 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/07/10 21:16:49 [notice] 1#1: start worker processes
+2023/07/10 21:16:49 [notice] 1#1: start worker process 20
+2023/07/10 21:16:49 [notice] 1#1: start worker process 21
+2023/07/10 21:16:49 [notice] 1#1: start worker process 22
+2023/07/10 21:16:49 [notice] 1#1: start worker process 23
+2023/07/10 21:16:49 [notice] 1#1: start worker process 24
+2023/07/10 21:16:49 [notice] 1#1: start worker process 25
