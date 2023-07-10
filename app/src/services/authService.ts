@@ -4,7 +4,7 @@ import { IUserPatient, IUserPatientLoginRequest, IUserPatientRegistrationRequest
 export const AuthService = createApi({
     reducerPath : "auth-service",
     baseQuery : fetchBaseQuery({
-        baseUrl: "http://localhost:8888"
+        baseUrl: "lumen"
     }),
     endpoints: (build) => ({
         signIn : build.mutation<IUserPatient, Partial<IUserPatientLoginRequest>>({

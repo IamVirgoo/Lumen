@@ -70,7 +70,7 @@ export default function IndexPage() {
                                     <Card title={value.fio}
                                           description={value.info}
                                           link={`/doctor/${value.id}`}
-                                          image={`http://localhost/lumen/photo/${value.photo}`}
+                                          image={`lumen/photo/${value.photo}`}
                                     />
                                 </SwiperSlide>
                             )}

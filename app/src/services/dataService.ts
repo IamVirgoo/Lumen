@@ -4,7 +4,7 @@ import { IUserDoctorDataRequest, IUserDoctorShortDataRequest } from "../models/I
 export const DataService = createApi({
     reducerPath : "data-service",
     baseQuery : fetchBaseQuery({
-        baseUrl: "http://localhost:8888"
+        baseUrl: "lumen"
     }),
     endpoints: (build) => ({
         getDoctors : build.query<IUserDoctorShortDataRequest[], any>({
