@@ -98,7 +98,7 @@ export default function DoctorProfile() {
                     </div>
                     <div className={'doctor--container--content'}>
                         <div className={'doctor--container--content__left'}>
-                            <img className={'doctor--container--content__left--image'} src={`http://localhost/lumen/photo/${doctor.data.photo}`} alt=""/>
+                            <img className={'doctor--container--content__left--image'} src={`lumen/photo/${doctor.data.photo}`} alt=""/>
                             <div
                                 className={'doctor--container--content__left--price'}
                             >

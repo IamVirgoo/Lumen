@@ -52,7 +52,7 @@ export default function RegistrationPage() {
     const open = async (e : any) => {
         e.preventDefault()
         try {
-            const result = await fetch(`http://localhost:8888/send_confirm_sms?number=${telephoneNumber}`, {
+            const result = await fetch(`lumen/send_confirm_sms?number=${telephoneNumber}`, {
                 method : "GET"
             })
             if (result.ok) {
@@ -66,7 +66,7 @@ export default function RegistrationPage() {
 
     const checkCode = async () => {
         try {
-            const result = await fetch(`http://localhost:8888/confirm_code?number=${telephoneNumber}&code=${confirmCode}`, {
+            const result = await fetch(`lumen/confirm_code?number=${telephoneNumber}&code=${confirmCode}`, {
                 method : "GET"
             })
             if (result.ok) {
